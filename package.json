@@ -1,0 +1,16 @@
+{
+  "name": "stream-deck-claude-codex-usage",
+  "version": "1.2.0",
+  "private": true,
+  "license": "MIT",
+  "scripts": {
+    "setup": "npm ci --omit=dev --prefix com.local.claude-desktop-week.sdPlugin",
+    "test": "node --test com.local.claude-desktop-week.sdPlugin/tests/*.cjs",
+    "validate": "streamdeck validate com.local.claude-desktop-week.sdPlugin",
+    "pack": "node scripts/package.mjs",
+    "check:live": "node com.local.claude-desktop-week.sdPlugin/bin/desktop.js"
+  },
+  "devDependencies": {
+    "@elgato/cli": "1.10.4"
+  }
+}

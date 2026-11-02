@@ -1,0 +1,217 @@
+<!doctype html>
+<html lang="en">
+  <meta charset="utf-8" /><style>
+    * {
+      box-sizing: border-box;
+    }
+    body {
+      background: #202124;
+      color: #e7ebf1;
+      font:
+        13px -apple-system,
+        BlinkMacSystemFont,
+        sans-serif;
+      margin: 18px;
+    }
+    h3 {
+      font-size: 13px;
+      color: #a7c9ed;
+      letter-spacing: 1.2px;
+      margin: 20px 0 10px;
+    }
+    p {
+      color: #adb7c5;
+      line-height: 1.45;
+    }
+    label {
+      display: block;
+      margin: 12px 0 5px;
+    }
+    input,
+    select {
+      background: #11151c;
+      border: 1px solid #424852;
+      border-radius: 7px;
+      color: #e7ebf1;
+      padding: 8px;
+      width: 100%;
+      font: inherit;
+    }
+    .row {
+      display: grid;
+      grid-template-columns: 1fr 1fr 1fr;
+      gap: 10px;
+    }
+    .colors {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 10px;
+    }
+    input[type="color"] {
+      height: 36px;
+      padding: 3px;
+    }
+    button {
+      background: #33455a;
+      color: white;
+      border: 0;
+      border-radius: 7px;
+      padding: 9px 14px;
+      margin-top: 14px;
+      cursor: pointer;
+    }
+    #error {
+      color: #ffc05b;
+    }
+    #status {
+      padding: 10px;
+      background: #171c24;
+      border-radius: 8px;
+      line-height: 1.6;
+    }
+    img {
+      width: 90px;
+      height: 90px;
+      float: right;
+      margin: 0 0 8px 10px;
+    }
+  </style>
+  <img id="preview" alt="Button preview" />
+  <h3>CLAUDE DESKTOP · WEEK</h3>
+  <p>
+    Uses the Claude Desktop login on this Mac automatically. No manual session
+    key is required.
+  </p>
+  <div style="clear: both"></div>
+  <div id="status">Connecting…</div>
+  <h3>REMAINING THRESHOLDS</h3>
+  <p>Colors use remaining capacity. All thresholds are percentages.</p>
+  <div class="row">
+    <div>
+      <label for="yellow">Yellow ≤</label
+      ><input id="yellow" type="number" min="0" max="100" value="50" />
+    </div>
+    <div>
+      <label for="red">Red ≤</label
+      ><input id="red" type="number" min="0" max="100" value="20" />
+    </div>
+    <div>
+      <label for="critical">Critical ≤</label
+      ><input id="critical" type="number" min="0" max="100" value="10" />
+    </div>
+  </div>
+  <div id="error"></div>
+  <h3>COLORS</h3>
+  <div class="colors">
+    <div>
+      <label>Green</label><input id="greenColor" type="color" value="#55e58c" />
+    </div>
+    <div>
+      <label>Yellow</label
+      ><input id="yellowColor" type="color" value="#ffd45c" />
+    </div>
+    <div>
+      <label>Red</label><input id="redColor" type="color" value="#ff6b70" />
+    </div>
+    <div>
+      <label>Critical</label
+      ><input id="criticalColor" type="color" value="#ff344f" />
+    </div>
+  </div>
+  <p>
+    Refreshes every 60 seconds. The bottom line shows hours and minutes after
+    the full days remaining. Errors mark the last reading STALE; API retry
+    delays are respected.
+  </p>
+  <button id="refresh">Check now</button>
+  <script>
+    let ws,
+      uuid,
+      action,
+      config = {};
+    const ids = [
+      "yellow",
+      "red",
+      "critical",
+      "greenColor",
+      "yellowColor",
+      "redColor",
+      "criticalColor",
+    ];
+    function send(event, payload) {
+      ws?.readyState === 1 &&
+        ws.send(
+          JSON.stringify({
+            event,
+            context: uuid,
+            ...(event === "sendToPlugin" ? { action } : {}),
+            payload,
+          }),
+        );
+    }
+    window.connectElgatoStreamDeckSocket = function (
+      port,
+      piUUID,
+      registerEvent,
+      info,
+      actionInfo,
+    ) {
+      uuid = piUUID;
+      const a = JSON.parse(actionInfo);
+      action = a.action;
+      config = a.payload?.settings || {};
+      ids.forEach((id) => {
+        if (config[id] !== undefined)
+          document.getElementById(id).value = config[id];
+      });
+      ws = new WebSocket("ws://127.0.0.1:" + port);
+      ws.onopen = () => {
+        ws.send(JSON.stringify({ event: registerEvent, uuid }));
+        send("sendToPlugin", { command: "refresh" });
+      };
+      ws.onmessage = (e) => {
+        const m = JSON.parse(e.data);
+        if (m.event !== "sendToPropertyInspector") return;
+        const { data, error, image } = m.payload;
+        if (image) document.getElementById("preview").src = image;
+        const status = document.getElementById("status");
+        status.textContent = data
+          ? "Remaining " +
+            Math.round(data.remaining) +
+            "% · Resets " +
+            new Date(data.resetsAt).toLocaleString() +
+            " · Checked " +
+            new Date(data.fetchedAt).toLocaleTimeString()
+          : "Waiting for Claude Desktop usage data";
+        if (error) status.textContent += " · " + error;
+      };
+    };
+    ids.forEach((id) =>
+      document.getElementById(id).addEventListener("change", () => {
+        const next = { ...config };
+        ids.forEach(
+          (k) =>
+            (next[k] = ["yellow", "red", "critical"].includes(k)
+              ? Number(document.getElementById(k).value)
+              : document.getElementById(k).value),
+        );
+        if (!(
+          next.yellow <= 100 &&
+          next.yellow > next.red &&
+          next.red > next.critical &&
+          next.critical >= 0
+        )) {
+          document.getElementById("error").textContent =
+            "Required: 100 ≥ yellow > red > critical ≥ 0";
+          return;
+        }
+        document.getElementById("error").textContent = "";
+        config = next;
+        send("setSettings", config);
+      }),
+    );
+    document.getElementById("refresh").onclick = () =>
+      send("sendToPlugin", { command: "refresh" });
+    document.getElementById("preview").src = "../imgs/key.svg";
+  </script>
+</html>

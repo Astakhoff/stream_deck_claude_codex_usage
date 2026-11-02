@@ -1,0 +1,4 @@
+tests/
+status.json
+*.log
+.DS_Store

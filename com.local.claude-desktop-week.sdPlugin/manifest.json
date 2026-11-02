@@ -1,0 +1,56 @@
+{
+  "$schema": "https://schemas.elgato.com/streamdeck/plugins/manifest.json",
+  "UUID": "com.local.claude-desktop-week",
+  "Name": "Claude Desktop",
+  "Version": "1.2.0.0",
+  "Author": "Astakhoff",
+  "Description": "Weekly remaining capacity and saved limit resets using Claude Desktop login.",
+  "Category": "Claude Desktop",
+  "CategoryIcon": "imgs/category",
+  "Icon": "imgs/plugin",
+  "CodePath": "bin/plugin.js",
+  "OS": [
+    {
+      "Platform": "mac",
+      "MinimumVersion": "13"
+    }
+  ],
+  "Software": {
+    "MinimumVersion": "6.6"
+  },
+  "SDKVersion": 2,
+  "Nodejs": {
+    "Version": "20"
+  },
+  "Actions": [
+    {
+      "Name": "Weekly remaining",
+      "UUID": "com.local.claude-desktop-week.weekly",
+      "Icon": "imgs/action",
+      "Controllers": ["Keypad"],
+      "Tooltip": "Remaining weekly capacity; refreshes every minute using Claude Desktop.",
+      "PropertyInspectorPath": "ui/settings.html",
+      "States": [
+        {
+          "Image": "imgs/key",
+          "ShowTitle": false
+        }
+      ]
+    },
+    {
+      "Name": "Saved resets",
+      "UUID": "com.local.claude-desktop-week.resets",
+      "Icon": "imgs/resets",
+      "Controllers": ["Keypad"],
+      "Tooltip": "Saved Claude resets and earliest expiry. Read only; refreshes every minute.",
+      "PropertyInspectorPath": "ui/resets.html",
+      "States": [
+        {
+          "Image": "imgs/resets-key",
+          "ShowTitle": false
+        }
+      ]
+    }
+  ],
+  "URL": "https://github.com/Astakhoff/stream_deck_claude_codex_usage"
+}

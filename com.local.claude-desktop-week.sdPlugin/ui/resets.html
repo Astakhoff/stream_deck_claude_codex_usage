@@ -1,0 +1,154 @@
+<!doctype html>
+<html lang="en">
+  <meta charset="utf-8" /><style>
+    * {
+      box-sizing: border-box;
+    }
+    body {
+      background: #202124;
+      color: #e7ebf1;
+      font:
+        13px -apple-system,
+        BlinkMacSystemFont,
+        sans-serif;
+      margin: 18px;
+    }
+    h3 {
+      font-size: 13px;
+      color: #a7c9ed;
+      letter-spacing: 1px;
+    }
+    p {
+      color: #adb7c5;
+      line-height: 1.5;
+    }
+    label {
+      display: block;
+      margin: 15px 0 6px;
+    }
+    input,
+    select {
+      background: #11151c;
+      border: 1px solid #424852;
+      border-radius: 7px;
+      color: #e7ebf1;
+      padding: 8px;
+      width: 100%;
+      font: inherit;
+    }
+    input[type="color"] {
+      height: 36px;
+      padding: 3px;
+    }
+    #status {
+      padding: 12px;
+      background: #171c24;
+      border-radius: 8px;
+      white-space: pre-line;
+      line-height: 1.6;
+    }
+    img {
+      width: 90px;
+      height: 90px;
+      float: right;
+      margin: 0 0 10px 10px;
+    }
+    button {
+      background: #33455a;
+      color: white;
+      border: 0;
+      border-radius: 7px;
+      padding: 9px 14px;
+      margin-top: 14px;
+      cursor: pointer;
+    }
+  </style>
+  <img id="preview" src="../imgs/resets-key.svg" alt="Button preview" />
+  <h3>CLAUDE DESKTOP · RESETS</h3>
+  <p>
+    Saved Claude resets. Uses the login from the installed Claude Desktop app.
+  </p>
+  <div style="clear: both"></div>
+  <div id="status">Connecting…</div>
+  <p>
+    R1 / R2 / R3 show saved resets remaining. The date is their earliest expiry.
+    When there are no resets, the key displays none.
+  </p>
+  <label for="greenColor">Expiry color</label
+  ><input id="greenColor" type="color" value="#55e58c" />
+  <p>
+    Refreshes every minute with the weekly limit in one request. An unavailable
+    reading shows No data / STALE and is never treated as zero resets.
+  </p>
+  <button id="refresh">Check now</button>
+  <script>
+    let ws,
+      uuid,
+      action,
+      config = {};
+    function send(event, payload) {
+      if (ws?.readyState === 1)
+        ws.send(
+          JSON.stringify({
+            event,
+            context: uuid,
+            ...(event === "sendToPlugin" ? { action } : {}),
+            payload,
+          }),
+        );
+    }
+    window.connectElgatoStreamDeckSocket = function (
+      port,
+      id,
+      registerEvent,
+      info,
+      actionInfo,
+    ) {
+      uuid = id;
+      const a = JSON.parse(actionInfo);
+      action = a.action;
+      config = a.payload?.settings || {};
+      for (const key of ["greenColor"])
+        if (config[key]) document.getElementById(key).value = config[key];
+      ws = new WebSocket("ws://127.0.0.1:" + port);
+      ws.onopen = () => {
+        ws.send(JSON.stringify({ event: registerEvent, uuid }));
+        send("sendToPlugin", { command: "refresh" });
+      };
+      ws.onmessage = (e) => {
+        const m = JSON.parse(e.data);
+        if (m.event !== "sendToPropertyInspector") return;
+        const { data, error, image } = m.payload;
+        if (image) document.getElementById("preview").src = image;
+        const credits = data?.resetCredits;
+        let text = "Reset data unavailable";
+        if (credits?.known) {
+          const grants = credits.grants.filter(
+            (g) => !g.expiresAt || Date.parse(g.expiresAt) > Date.now(),
+          );
+          const total = grants.reduce((n, g) => n + g.count, 0);
+          text = total ? "Saved resets available: " + total : "No saved resets";
+          for (const grant of grants)
+            text +=
+              "\n" +
+              grant.count +
+              " × " +
+              (grant.expiresAt
+                ? "expires " + new Date(grant.expiresAt).toLocaleString()
+                : "no expiry provided");
+        }
+        if (data?.fetchedAt)
+          text += "\nChecked: " + new Date(data.fetchedAt).toLocaleTimeString();
+        if (error) text += "\n" + error;
+        document.getElementById("status").textContent = text;
+      };
+    };
+    for (const key of ["greenColor"])
+      document.getElementById(key).onchange = () => {
+        config = { ...config, [key]: document.getElementById(key).value };
+        send("setSettings", config);
+      };
+    document.getElementById("refresh").onclick = () =>
+      send("sendToPlugin", { command: "refresh" });
+  </script>
+</html>
