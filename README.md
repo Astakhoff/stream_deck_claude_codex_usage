@@ -2,7 +2,7 @@
 
 A small, local Stream Deck plugin for checking AI subscription capacity without copying session keys.
 
-**Current release: Claude Desktop on macOS.** Two actions are implemented: **Weekly remaining** and **Saved resets**. Codex is not implemented in this repository yet. Existing third-party Codex plugins are not bundled.
+**Claude and Codex on macOS.** Four actions are included in one plugin: **Claude weekly remaining**, **Claude saved resets**, **Codex weekly remaining**, and **Codex saved resets**. Existing third-party plugins are not bundled.
 
 ![Weekly remaining capacity examples](docs/images/claude-week-preview.png)
 ![Saved reset examples](docs/images/claude-resets-preview.png)
@@ -15,34 +15,35 @@ The previews use example values and dates, not a real account snapshot.
 - Saved reset inventory as `R1`, `R2`, `R3`, etc., with the earliest expiry date.
 - `none` when the server confirms there are no saved resets.
 - Configurable remaining-capacity thresholds and colors.
-- One shared usage request every 60 seconds while either action is visible.
-- Automatic use of the existing Claude Desktop login on the same Mac.
+- Independent 60-second polling for Claude and Codex while their actions are visible.
+- Claude keys share one request; Codex keys share one usage request and one reset-inventory request per poll.
+- Automatic use of the existing Claude Desktop login and local Codex ChatGPT login on the same Mac.
 - Explicit unavailable/stale states instead of treating errors as zero resets.
 - Read-only monitoring: pressing a key checks usage; it does not redeem a reset.
 
 ## Install
 
 1. [Install and connect Stream Deck](docs/INSTALLATION.md#1-install-stream-deck).
-2. Install Claude Desktop and sign in to your subscription account.
+2. Sign in to Claude Desktop and/or Codex with the subscription account you want to monitor. Codex requires a local file-backed ChatGPT login; see the installation guide.
 3. Download the `.streamDeckPlugin` installer from the [latest release](https://github.com/Astakhoff/stream_deck_claude_codex_usage/releases/latest) and open it with Stream Deck.
-4. In Stream Deck, find **Claude Desktop** and drag **Weekly remaining** and **Saved resets** onto two keys.
+4. In Stream Deck, find **Claude & Codex Usage** and drag the desired provider’s weekly and reset actions onto keys.
 5. If macOS asks for access to **Claude Safe Storage**, review the request and allow access if you trust this plugin.
 
 For a manual installation, source checkout, updates, removal, and troubleshooting, see the [installation guide](docs/INSTALLATION.md).
 
 ## Requirements and compatibility
 
-| Component        | Support                                                                                            |
-| ---------------- | -------------------------------------------------------------------------------------------------- |
-| Operating system | macOS 13 or later; the installed Stream Deck version may require a newer OS                        |
-| Stream Deck app  | Manifest minimum 6.6; tested with 7.4.2                                                            |
-| Claude Desktop   | Standard macOS installation and signed-in account; tested with 4.4212.0                            |
-| Node runtime     | Node.js 20 supplied by Stream Deck; users do not need a separate Node install for release packages |
-| Devices          | Keypad actions; tested on Stream Deck XL                                                           |
-| Windows / Linux  | Not implemented                                                                                    |
-| Codex            | Not implemented                                                                                    |
+| Component        | Support                                                                                                |
+| ---------------- | ------------------------------------------------------------------------------------------------------ |
+| Operating system | macOS 13 or later; the installed Stream Deck version may require a newer OS                            |
+| Stream Deck app  | Manifest minimum 6.6; tested with 7.4.2                                                                |
+| Claude Desktop   | Standard macOS installation and signed-in account; tested with 4.4212.0                                |
+| Node runtime     | Node.js 20 supplied by Stream Deck; users do not need a separate Node install for release packages     |
+| Devices          | Keypad actions; tested on Stream Deck XL                                                               |
+| Windows / Linux  | Not implemented                                                                                        |
+| Codex            | Local ChatGPT login in `~/.codex/auth.json`, or `CODEX_HOME/auth.json` when configured for Stream Deck |
 
-Claude Desktop's credential cache and Anthropic's usage endpoint are internal interfaces. Future updates may require changes to this plugin. Multiple organizations are currently reported as `Multi org` rather than silently choosing one.
+Claude Desktop's credential cache and the Anthropic/OpenAI usage endpoints are internal interfaces. Future updates may require changes to this plugin. Multiple organizations are currently reported as `Multi org` rather than silently choosing one.
 
 ## Reading the keys
 
@@ -67,7 +68,9 @@ Expired, paused, not-yet-started, and exhausted grants do not count. A saved res
 
 ## Privacy and authentication
 
-The plugin reads Claude Desktop's encrypted OAuth cache and uses the macOS Keychain to decrypt it in memory. It sends an authenticated `GET` only to `https://api.anthropic.com/api/oauth/usage?cedar_ember=1`. It does not write credentials, use refresh tokens, modify Claude's login, or send data to a project-owned server.
+Claude uses its encrypted Desktop OAuth cache and macOS Keychain. Codex uses the access token and account ID from its existing local ChatGPT `auth.json` file. API-key-only and Keychain-only Codex credentials are not supported by this reader.
+
+Each provider sends read-only authenticated `GET` requests only to its own service: Anthropic's usage endpoint for Claude, and OpenAI's `chatgpt.com/backend-api/wham/usage` and `rate-limit-reset-credits` endpoints for Codex. Credentials are never shared between providers. The plugin does not write credentials, use refresh tokens, change either login, or send data to a project-owned server.
 
 A local `status.json` contains usage and polling state only. It is excluded from Git and distribution packages. See [architecture and privacy details](docs/ARCHITECTURE.md).
 
@@ -83,7 +86,7 @@ npm run validate
 npm run pack
 ```
 
-The installer is written to `dist/`. The pack command uses Elgato's official Stream Deck CLI. Tests use synthetic credentials and inventories and do not access a live account. A deliberate live check is available with `npm run check:live`; it prints usage data, never tokens.
+The installer is written to `dist/`. The pack command uses Elgato's official Stream Deck CLI. Tests use synthetic credentials and inventories and do not access a live account. Deliberate live checks are available with `npm run check:live` (Claude) and `npm run check:live:codex` (Codex); they print usage data, never tokens.
 
 See [CONTRIBUTING.md](CONTRIBUTING.md) for the project layout and contribution workflow.
 

@@ -16,23 +16,33 @@ function run(command, args, cwd = root) {
 }
 await fs.access(path.join(plugin, "node_modules/ws/package.json"));
 await fs.mkdir(dist, { recursive: true });
-run(path.join(root, "node_modules/.bin/streamdeck"), [
-  "pack",
-  name,
-  "--output",
-  "dist",
-  "--force",
-  "--no-file-list",
-]);
+const manifestPath = path.join(plugin, "manifest.json");
+const originalManifest = await fs.readFile(manifestPath);
+try {
+  run(path.join(root, "node_modules/.bin/streamdeck"), [
+    "pack",
+    name,
+    "--output",
+    "dist",
+    "--force",
+    "--no-file-list",
+  ]);
+} finally {
+  // The official CLI normalizes the manifest in place. Keep the checkout clean.
+  await fs.writeFile(manifestPath, originalManifest);
+}
 await fs.rm(stage, { recursive: true, force: true });
 try {
   await fs.mkdir(stage);
   await fs.cp(plugin, path.join(stage, name), {
     recursive: true,
     filter: (source) =>
-      !["status.json", ".DS_Store", "tests", ".sdignore"].includes(
+      !["status.json", "auth.json", ".DS_Store", "tests", ".sdignore"].includes(
         path.basename(source),
-      ) && !source.endsWith(".log"),
+      ) &&
+      !source.endsWith(".log") &&
+      !source.endsWith(".credentials.json") &&
+      !path.basename(source).startsWith(".env"),
   });
   await fs.copyFile(path.join(root, "LICENSE"), path.join(stage, "LICENSE"));
   await fs.copyFile(
@@ -42,7 +52,7 @@ try {
   const { version } = JSON.parse(
     await fs.readFile(path.join(root, "package.json"), "utf8"),
   );
-  const filename = `stream-deck-claude-desktop-v${version}.zip`;
+  const filename = `stream-deck-claude-codex-v${version}.zip`;
   await fs.rm(path.join(dist, filename), { force: true });
   run(
     "zip",

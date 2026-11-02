@@ -52,7 +52,11 @@ function render(data, raw, error, now = Date.now()) {
     ru = s.language === "ru";
   const expired = data && Date.parse(data.resetsAt) <= now;
   const stale = !!error || (data && now - data.fetchedAt > 150000);
-  const valid = data && !expired;
+  const valid =
+    data &&
+    Number.isFinite(data.remaining) &&
+    Number.isFinite(Date.parse(data.resetsAt)) &&
+    !expired;
   const color = valid ? colorFor(data.remaining, s) : "#91a1b9";
   const time = valid
     ? countdown(data.resetsAt, now, ru)
@@ -60,6 +64,7 @@ function render(data, raw, error, now = Date.now()) {
   const errors = {
     KEYCHAIN: "Keychain",
     OPEN_CLAUDE: "Open Claude",
+    OPEN_CODEX: "Open Codex",
     MULTIPLE_ORGS: "Multi org",
     DESKTOP_CHANGED: "Update needed",
     OFFLINE: "Offline",

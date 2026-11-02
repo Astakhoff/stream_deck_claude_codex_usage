@@ -1,5 +1,12 @@
 # Changelog
 
+## 1.3.0 — 2026-11-02
+
+- Add Codex weekly remaining capacity and saved reset inventory using the existing local ChatGPT login.
+- Add independent provider polling, per-resource error handling, and account-isolated retained readings.
+- Reuse the visual style and color controls across all four actions.
+- Update English documentation, privacy notes, offline tests, and release packages for both providers.
+
 ## 1.2.0 — 2026-11-02
 
 - Initial public release with English documentation and property inspectors.

@@ -8,3 +8,5 @@ work/
 status.json
 *.streamDeckPlugin
 *.zip
+auth.json
+*.credentials.json

@@ -10,13 +10,25 @@
 
 Elgato's [official quick start guide](https://www.elgato.com/us/en/explorer/products/stream-deck/elgato-stream-deck-quick-start-guide/) covers app installation, USB connection, and assigning actions. Check the [current Stream Deck system requirements](https://help.elgato.com/hc/en-us/articles/34512594204049-Elgato-Stream-Deck-Software-System-Requirements) before installing the latest app on an older Mac.
 
-## 2. Prepare Claude Desktop
+## 2. Prepare your provider logins
+
+### Claude Desktop
 
 1. Download Claude Desktop from [Claude's official download page](https://claude.ai/download).
 2. Install it in Applications and sign in to the account whose limits you want to monitor.
 3. Open Claude Desktop at least once and confirm that usage information is available for that account.
 
 The plugin uses the existing desktop login. No session key, API key, or separate terminal login is required. If the required OAuth cache is not present, the plugin displays `Open Claude`; it cannot create the cache by itself.
+
+### Codex
+
+1. Open Codex and sign in with **ChatGPT**, using the account whose limits you want to monitor. An OpenAI API key does not provide subscription usage or saved reset inventory.
+2. This reader uses the existing `~/.codex/auth.json` file. If `CODEX_HOME` is set in the environment that launches Stream Deck, it reads `CODEX_HOME/auth.json` instead.
+3. Keep the login managed by Codex. The plugin rereads the file on each poll and never refreshes or writes the token itself. No token needs to be pasted into Stream Deck.
+
+If your Codex installation stores credentials only in the OS credential store, this reader currently displays `Open Codex`; Keychain-only Codex login is not implemented. See OpenAI's [authentication documentation](https://learn.chatgpt.com/docs/auth) for credential-store choices. Do not publish or share `auth.json`.
+
+You can use either provider independently; a missing Claude login does not prevent the Codex keys from working.
 
 ## 3. Install the plugin
 
@@ -25,8 +37,8 @@ The plugin uses the existing desktop login. No session key, API key, or separate
 1. Open [Releases](https://github.com/Astakhoff/stream_deck_claude_codex_usage/releases/latest).
 2. Download the file ending in `.streamDeckPlugin`.
 3. Open the file with the Stream Deck app and follow its installation prompts.
-4. Search for **Claude Desktop** in the actions list.
-5. Drag **Weekly remaining** and **Saved resets** onto empty keys.
+4. Search for **Claude & Codex Usage** in the actions list.
+5. Drag the **Claude weekly remaining / Claude saved resets** and/or **Codex weekly remaining / Codex saved resets** actions onto empty keys.
 6. Wait for the first reading. If macOS requests access to **Claude Safe Storage**, review and approve the request if you trust the plugin.
 
 The installer does not contain account data. Access to your own Claude login happens locally after installation.
@@ -69,7 +81,7 @@ Select a key in Stream Deck to view its settings below the key grid.
 - **Saved resets:** change the expiry text color. The settings panel lists each counted grant and its expiry.
 - **Check now:** requests a reading when the shared one-minute interval allows it. It respects server retry delays.
 
-Both keys share one request. An inactive profile is not polled. The bottom `HH:MM` on the weekly key is the remainder after full days; it is not a clock time.
+Keys share polling within each provider. Claude makes one request per poll; Codex makes one usage request and one reset-inventory request. The providers have independent cooldowns and error states. An inactive provider is not polled. The bottom `HH:MM` on the weekly key is the remainder after full days; it is not a clock time.
 
 ## Updating
 
@@ -85,6 +97,7 @@ Remove the plugin through Stream Deck's plugin management, or quit Stream Deck a
 
 | Display / symptom                 | What to do                                                                                                            |
 | --------------------------------- | --------------------------------------------------------------------------------------------------------------------- |
+| `Open Codex`                      | Open Codex and check the ChatGPT login and local auth file. API-key-only and Keychain-only login are unsupported.     |
 | `Open Claude`                     | Open Claude Desktop and check its sign-in. The plugin never refreshes or replaces desktop credentials itself.         |
 | `Keychain`                        | Check the macOS access request for Claude Safe Storage. Access denied or a timeout causes a retry after five minutes. |
 | `Multi org`                       | The cache contains multiple organizations for the active account. Automatic selection is deliberately unsupported.    |
@@ -96,4 +109,4 @@ Remove the plugin through Stream Deck's plugin management, or quit Stream Deck a
 | Plugin missing                    | Reopen Stream Deck; check that the folder name ends in `.sdPlugin` and that release dependencies are included.        |
 | Old percentage after weekly reset | The old percentage is hidden until a valid new period arrives; wait for the next successful refresh.                  |
 
-For local diagnosis, the installed plugin may contain `status.json`. It includes usage and timestamps, not credentials. Review it before sharing. Never upload Claude's `config.json`, Keychain exports, tokens, or personal Stream Deck profile backups to an issue.
+For local diagnosis, the installed plugin may contain `status.json`. It includes usage and timestamps, not credentials. Review it before sharing. Never upload Codex's `auth.json`, Claude's `config.json`, Keychain exports, tokens, or personal Stream Deck profile backups to an issue.

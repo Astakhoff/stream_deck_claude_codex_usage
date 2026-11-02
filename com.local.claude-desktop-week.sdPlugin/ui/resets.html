@@ -65,9 +65,7 @@
   </style>
   <img id="preview" src="../imgs/resets-key.svg" alt="Button preview" />
   <h3>CLAUDE DESKTOP · RESETS</h3>
-  <p>
-    Saved Claude resets. Uses the login from the installed Claude Desktop app.
-  </p>
+  <p id="provider-description"></p>
   <div style="clear: both"></div>
   <div id="status">Connecting…</div>
   <p>
@@ -77,7 +75,7 @@
   <label for="greenColor">Expiry color</label
   ><input id="greenColor" type="color" value="#55e58c" />
   <p>
-    Refreshes every minute with the weekly limit in one request. An unavailable
+    Refreshes every minute with provider-specific requests. An unavailable
     reading shows No data / STALE and is never treated as zero resets.
   </p>
   <button id="refresh">Check now</button>
@@ -107,6 +105,12 @@
       uuid = id;
       const a = JSON.parse(actionInfo);
       action = a.action;
+      const codex = action.includes(".codex-");
+      document.querySelector("h3").textContent =
+        (codex ? "CODEX" : "CLAUDE DESKTOP") + " · RESETS";
+      document.getElementById("provider-description").textContent = codex
+        ? "Uses the local Codex ChatGPT login automatically. No manual token is required."
+        : "Uses the installed Claude Desktop login automatically. No manual session key is required.";
       config = a.payload?.settings || {};
       for (const key of ["greenColor"])
         if (config[key]) document.getElementById(key).value = config[key];

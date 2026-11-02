@@ -66,7 +66,8 @@ function availableResets(credits, now = Date.now()) {
 }
 function renderResets(data, config = {}, error, now = Date.now()) {
   const credits = availableResets(data?.resetCredits, now);
-  const stale = !!error || (data && now - data.fetchedAt > 150000);
+  const stale =
+    credits.known && (!!error || (data && now - data.fetchedAt > 150000));
   const has = credits.known && credits.count > 0;
   const accent = /^#[0-9a-f]{6}$/i.test(config.greenColor)
     ? config.greenColor
@@ -83,9 +84,11 @@ function renderResets(data, config = {}, error, now = Date.now()) {
   const sub = stale
     ? "STALE"
     : !credits.known
-      ? error === "OPEN_CLAUDE"
-        ? "Open Claude"
-        : "No data"
+      ? error === "OPEN_CODEX"
+        ? "Open Codex"
+        : error === "OPEN_CLAUDE"
+          ? "Open Claude"
+          : "No data"
       : has
         ? credits.expiresAt
           ? "EXPIRES"

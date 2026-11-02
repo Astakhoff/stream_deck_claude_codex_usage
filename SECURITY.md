@@ -1,10 +1,10 @@
 # Security and privacy reporting
 
-Do not publish tokens, Keychain contents, Claude configuration files, account identifiers, or personal Stream Deck profiles in issues or pull requests.
+Do not publish tokens, Keychain contents, Claude configuration files, Codex auth files, account identifiers, or personal Stream Deck profiles in issues or pull requests.
 
 For a potential credential exposure or another security issue, use GitHub's private vulnerability reporting feature if available on this repository. Otherwise, open a minimal issue asking for a private contact channel, without including exploit details or private data.
 
-This plugin accesses a sensitive local OAuth credential to read account usage. Install a release only if you trust its source. The implementation does not log or persist credentials, refresh tokens, or Keychain passwords. Usage diagnostics can still reveal subscription activity and timestamps; review them before sharing.
+This plugin accesses sensitive local OAuth credentials to read account usage. Install a release only if you trust its source. The implementation does not log or persist credentials, refresh tokens, or Keychain passwords. Usage diagnostics can still reveal subscription activity and timestamps; review them before sharing.
 
 The usage endpoint and credential cache are internal interfaces. Schema or authentication changes can interrupt monitoring. The project is provided under the MIT license without a service availability guarantee.
 

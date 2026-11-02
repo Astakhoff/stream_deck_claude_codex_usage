@@ -2,7 +2,9 @@
 const WebSocket = require("ws");
 const fs = require("node:fs");
 const path = require("node:path");
-const { fetchUsage } = require("./desktop");
+const { fetchUsage: fetchClaude } = require("./desktop");
+const { fetchUsage: fetchCodex } = require("./codex");
+const { createPoller } = require("./poller");
 const { render, settings } = require("./render");
 const { renderResets } = require("./resets");
 const args = process.argv.slice(2),
@@ -11,66 +13,65 @@ const port = arg("-port");
 if (!/^\d+$/.test(port)) process.exit(1);
 const socket = new WebSocket(`ws://127.0.0.1:${port}`);
 const actions = new Map();
-let data,
-  error,
-  inFlight = false,
-  nextFetch = 0;
+const providers = {
+  claude: createPoller(fetchClaude),
+  codex: createPoller(fetchCodex),
+};
 const statusFile = path.join(__dirname, "../status.json");
 function send(event, context, payload) {
   if (socket.readyState === WebSocket.OPEN)
     socket.send(JSON.stringify({ event, context, payload }));
 }
 function paint(context, config) {
-  const svg =
-    config.actionType === "resets"
-      ? renderResets(data, config, error)
-      : render(
-          data?.weeklyError ? null : data,
-          config,
-          error || data?.weeklyError,
-        );
-  send("setImage", context, {
-    image: "data:image/svg+xml;base64," + Buffer.from(svg).toString("base64"),
-    target: 0,
-  });
+  const state = providers[config.provider].state,
+    data = state.data;
+  const resets = config.actionType === "resets";
+  const error = state.error || (resets ? data?.resetError : data?.weeklyError);
+  const display =
+    resets && data
+      ? { ...data, fetchedAt: data.resetFetchedAt ?? data.fetchedAt }
+      : data;
+  const svg = resets
+    ? renderResets(display, config, error)
+    : render(data, config, error);
+  const image =
+    "data:image/svg+xml;base64," + Buffer.from(svg).toString("base64");
+  send("setImage", context, { image, target: 0 });
   send("setTitle", context, { title: "", target: 0 });
   send("sendToPropertyInspector", context, {
-    data,
+    data: display,
     error: error || null,
-    nextFetch,
-    image: "data:image/svg+xml;base64," + Buffer.from(svg).toString("base64"),
+    nextFetch: state.nextFetch,
+    image,
   });
 }
-function paintAll() {
-  for (const [context, config] of actions) paint(context, config);
+function paintAll(provider) {
+  for (const [context, config] of actions)
+    if (!provider || config.provider === provider) paint(context, config);
 }
-async function tick() {
-  if (!actions.size) return;
-  if (inFlight || Date.now() < nextFetch) return;
-  inFlight = true;
+function saveStatus() {
   try {
-    data = await fetchUsage();
-    error = undefined;
-    nextFetch = Date.now() + 60000;
-  } catch (e) {
-    error = e.code || "ERROR";
-    nextFetch = Date.now() + (e.retryMs || 60000);
-  } finally {
-    inFlight = false;
-    // Contains only usage data, never credentials. Useful for local diagnostics.
-    try {
-      fs.writeFileSync(
-        statusFile,
-        JSON.stringify({
-          data,
-          error: error || null,
-          nextFetch,
-          updatedAt: Date.now(),
-        }),
-        { mode: 0o600 },
-      );
-    } catch {}
-    paintAll();
+    const status = {};
+    for (const [provider, { state }] of Object.entries(providers)) {
+      status[provider] = {
+        data: state.data,
+        error: state.error || null,
+        nextFetch: state.nextFetch,
+      };
+    }
+    fs.writeFileSync(
+      statusFile,
+      JSON.stringify({ providers: status, updatedAt: Date.now() }),
+      { mode: 0o600 },
+    );
+  } catch {}
+}
+async function tick(provider) {
+  if (![...actions.values()].some((config) => config.provider === provider))
+    return;
+  if (await providers[provider].poll()) {
+    saveStatus();
+    paintAll(provider);
   }
 }
 socket.on("open", () =>
@@ -88,19 +89,26 @@ socket.on("message", (bytes) => {
   if (m.event === "willAppear" || m.event === "didReceiveSettings") {
     actions.set(m.context, {
       ...settings(m.payload?.settings),
-      actionType: m.action?.endsWith(".resets") ? "resets" : "weekly",
+      provider: m.action?.includes(".codex-") ? "codex" : "claude",
+      actionType: m.action?.endsWith("resets") ? "resets" : "weekly",
     });
     paint(m.context, actions.get(m.context));
-    void tick();
+    void tick(actions.get(m.context).provider);
   }
   if (m.event === "willDisappear") actions.delete(m.context);
   if (m.event === "propertyInspectorDidAppear" && actions.has(m.context))
     paint(m.context, actions.get(m.context));
-  if (m.event === "keyDown") void tick();
-  if (m.event === "sendToPlugin" && m.payload?.command === "refresh")
-    void tick();
+  if (
+    m.event === "keyDown" ||
+    (m.event === "sendToPlugin" && m.payload?.command === "refresh")
+  ) {
+    const action = actions.get(m.context);
+    if (action) void tick(action.provider);
+  }
 });
 socket.on("close", () => process.exit(0));
 socket.on("error", () => process.exit(1));
-setInterval(() => void tick(), 1000);
-setInterval(paintAll, 60000);
+setInterval(() => {
+  for (const provider of Object.keys(providers)) void tick(provider);
+}, 1000);
+setInterval(() => paintAll(), 60000);
