@@ -111,8 +111,8 @@ test("Stream Deck routes all six actions to the correct provider and shares read
   assert.match(svg("cx-week"), />75%</);
   assert.match(svg("cl-reset"), />none</);
   assert.match(svg("cx-reset"), />R2</);
-  assert.match(svg("cl-time"), />Claude</);
-  assert.match(svg("cx-time"), />Codex</);
+  assert.match(svg("cl-time"), />Week</);
+  assert.match(svg("cx-time"), />Week</);
   assert.doesNotMatch(svg("cl-time") + svg("cx-time"), /%/);
   for (const [context, suffix] of [
     ["cl-week", "weekly"],
@@ -133,7 +133,7 @@ test("Stream Deck routes all six actions to the correct provider and shares read
   await new Promise(setImmediate);
   assert.match(svg("cl-week"), />39%</);
   assert.match(svg("cx-week"), />25%</);
-  assert.match(svg("cl-time"), />Claude</);
+  assert.match(svg("cl-time"), />Week</);
   assert.deepEqual(counts, { claude: 1, codex: 1 });
   socket.emit(
     "message",

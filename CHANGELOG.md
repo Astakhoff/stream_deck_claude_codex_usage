@@ -1,5 +1,10 @@
 # Changelog
 
+## 1.6.1 — 2026-11-02
+
+- Remove Claude / Codex footers from weekly countdown keys.
+- Space the days, hours, and exact reset time evenly within the key.
+
 ## 1.6.0 — 2026-11-02
 
 - Use a single live days/hours countdown, such as 6d 13h, on percentage keys.

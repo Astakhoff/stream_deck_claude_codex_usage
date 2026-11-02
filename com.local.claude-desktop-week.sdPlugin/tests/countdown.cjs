@@ -38,7 +38,7 @@ test("invalid or elapsed deadlines never display a fabricated countdown", () => 
   ])
     assert.equal(remainingTime(value, now), null);
 });
-test("large time, Week header and provider footer with no percentage", () => {
+test("large time and reset clock without provider names or percentage", () => {
   for (const provider of ["claude", "codex"]) {
     const svg = renderCountdown(
       { resetsAt: reset, fetchedAt: now },
@@ -49,10 +49,7 @@ test("large time, Week header and provider footer with no percentage", () => {
     assert.match(svg, />Week</);
     assert.match(svg, />4d</);
     assert.match(svg, />10h</);
-    assert.match(
-      svg,
-      new RegExp(">" + (provider === "claude" ? "Claude" : "Codex") + "<"),
-    );
+    assert.doesNotMatch(svg, /Claude|Codex/);
     assert.doesNotMatch(svg, /%/);
   }
 });

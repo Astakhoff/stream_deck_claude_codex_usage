@@ -39,7 +39,7 @@ You can use either provider independently; a missing Claude login does not preve
 3. Open the file with the Stream Deck app and follow its installation prompts.
 4. Search for **Claude & Codex Weekly Usage** in the actions list.
 5. Drag the **Claude weekly remaining / Claude saved resets** and/or **Codex weekly remaining / Codex saved resets** actions onto empty keys.
-6. Optionally add **Claude weekly countdown** and **Codex weekly countdown** for large days/hours keys with provider labels.
+6. Optionally add **Claude weekly countdown** and **Codex weekly countdown** for large days/hours keys with the exact local reset time.
 7. Wait for the first reading. If macOS requests access to **Claude Safe Storage**, review and approve the request if you trust the plugin.
 
 The installer does not contain account data. Access to your own Claude login happens locally after installation.

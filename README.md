@@ -15,7 +15,7 @@ The previews use example values and dates, not a real account snapshot.
 ## Features
 
 - Weekly capacity as a large **Remaining** or **Used** percentage with a matching progress bar.
-- A dedicated weekly countdown key: **Week**, large **days / hours**, and a **Claude / Codex** footer.
+- A dedicated weekly countdown key: **Week**, large **days / hours**, and the exact local reset time.
 - Saved reset inventory as `R1`, `R2`, `R3`, etc., with the earliest expiry date.
 - `none` when the server confirms there are no saved resets.
 - Configurable remaining-capacity thresholds and colors.
@@ -69,7 +69,7 @@ Select the key in Stream Deck to choose **Remaining / Used**, then change thresh
 
 ### Weekly countdown
 
-A separate key shows **Week** at the top, full days and remaining hours in large text, and **Claude** or **Codex** at the bottom. For example, `4d` / `10h` means four days and ten full hours until the next weekly budget reset. The smaller line shows the exact reset weekday and 24-hour time (for example, `Fri 21:00`) in your system timezone. The last partial hour shows `<1h`. No percentage or progress bar is shown on this key.
+A separate key shows **Week** at the top, full days and remaining hours in large text, and the exact local reset time at the bottom. For example, `4d` / `10h` means four days and ten full hours until the next weekly budget reset. The smaller line shows the exact reset weekday and 24-hour time (for example, `Fri 21:00`) in your system timezone. The last partial hour shows `<1h`. No percentage or progress bar is shown on this key.
 
 The countdown uses the same weekly reset timestamp and shared polling as the percentage key, so adding it does not increase network requests. An elapsed deadline is hidden until a new valid period arrives. Select the key to change its accent color.
 
