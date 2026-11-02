@@ -15,6 +15,7 @@ This directory contains the English listing materials for **Claude & Codex Weekl
 - `media/gallery-01-remaining-used.png`: 1920 × 960 percentage toggle illustration.
 - `media/gallery-02-resets-countdown.png`: 1920 × 960 reset/countdown illustration.
 - `media/gallery-03-local-login.png`: 1920 × 960 local-login and requirements illustration.
+- `media/live-weekly-demo.mp4`: 1920 × 1080 live screen capture of real account readings and physical key-press responses (about 30 seconds).
 - `media/source/`: editable vector sources containing the actual plugin key renderings with sample data. Rasterize at their native dimensions when making changes.
 
 ## Build and distribution channels

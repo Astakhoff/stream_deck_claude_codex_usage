@@ -25,7 +25,7 @@ No public Marketplace product URL is available yet.
 
 - Elgato moderation and any requested changes.
 - Perform an on-device smoke test of the protected installation before the final public release. The downloaded processed package has passed the loopback SDK integration test.
-- Supply a real interaction video if required by the reviewers. The submitted gallery consists of three labeled illustrations; no interactive live demonstration video has been submitted. The official review guide requires a functional demonstration for integrations with paid services. A still account capture is not presented as such a demonstration.
+- The real interaction video has been recorded and uploaded as supplemental gallery media. It shows the live Stream Deck display responding to physical key presses for both providers. See REVIEWER-NOTES.md for capture details and the distinction between the direct and Marketplace builds.
 - After approval and protected-package verification, manually release the approved version to make it public.
 
 ## Evidence
