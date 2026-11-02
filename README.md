@@ -4,16 +4,18 @@
 
 A small, local Stream Deck plugin for checking AI subscription capacity without copying session keys.
 
-**Claude and Codex on macOS.** Four actions are included in one plugin: **Claude weekly remaining**, **Claude saved resets**, **Codex weekly remaining**, and **Codex saved resets**. Existing third-party plugins are not bundled.
+**Claude and Codex on macOS.** Six actions are included in one plugin: **Claude weekly remaining**, **Claude saved resets**, **Claude weekly countdown**, **Codex weekly remaining**, **Codex saved resets**, and **Codex weekly countdown**. Existing third-party plugins are not bundled.
 
 ![Weekly remaining capacity examples](docs/images/claude-week-preview.png)
 ![Saved reset examples](docs/images/claude-resets-preview.png)
+![Weekly countdown examples](docs/images/weekly-countdown-preview.png)
 
 The previews use example values and dates, not a real account snapshot.
 
 ## Features
 
 - Remaining weekly capacity as a large percentage, progress bar, and countdown.
+- A dedicated weekly countdown key: **Week**, large **days / hours**, and a **Claude / Codex** footer.
 - Saved reset inventory as `R1`, `R2`, `R3`, etc., with the earliest expiry date.
 - `none` when the server confirms there are no saved resets.
 - Configurable remaining-capacity thresholds and colors.
@@ -62,6 +64,12 @@ Claude Desktop's credential cache and the Anthropic/OpenAI usage endpoints are i
 | 10% or less        | Critical red  |
 
 Select the key in Stream Deck to change thresholds and colors. Thresholds must satisfy `100 ≥ yellow > red > critical ≥ 0`.
+
+### Weekly countdown
+
+A separate key shows **Week** at the top, full days and remaining hours in large text, and **Claude** or **Codex** at the bottom. For example, `4d` / `10h` means four days and ten full hours until the next weekly budget reset. The last partial hour shows `<1h`. No percentage or progress bar is shown on this key.
+
+The countdown uses the same weekly reset timestamp and shared polling as the percentage key, so adding it does not increase network requests. An elapsed deadline is hidden until a new valid period arrives. Select the key to change its accent color.
 
 ### Saved resets
 

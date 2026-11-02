@@ -7,6 +7,7 @@ const { fetchUsage: fetchCodex } = require("./codex");
 const { createPoller } = require("./poller");
 const { render, settings } = require("./render");
 const { renderResets } = require("./resets");
+const { renderCountdown } = require("./countdown");
 const args = process.argv.slice(2),
   arg = (name) => args[args.indexOf(name) + 1];
 const port = arg("-port");
@@ -33,7 +34,9 @@ function paint(context, config) {
       : data;
   const svg = resets
     ? renderResets(display, config, error)
-    : render(data, config, error);
+    : config.actionType === "countdown"
+      ? renderCountdown(data, config, error)
+      : render(data, config, error);
   const image =
     "data:image/svg+xml;base64," + Buffer.from(svg).toString("base64");
   send("setImage", context, { image, target: 0 });
@@ -90,7 +93,11 @@ socket.on("message", (bytes) => {
     actions.set(m.context, {
       ...settings(m.payload?.settings),
       provider: m.action?.includes(".codex-") ? "codex" : "claude",
-      actionType: m.action?.endsWith("resets") ? "resets" : "weekly",
+      actionType: m.action?.endsWith("resets")
+        ? "resets"
+        : m.action?.endsWith("countdown")
+          ? "countdown"
+          : "weekly",
     });
     paint(m.context, actions.get(m.context));
     void tick(actions.get(m.context).provider);

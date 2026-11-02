@@ -4,7 +4,7 @@ const vm = require("node:vm");
 const fs = require("node:fs");
 const path = require("node:path");
 const { EventEmitter } = require("node:events");
-test("Stream Deck routes all four actions to the correct provider and shares reads", async () => {
+test("Stream Deck routes all six actions to the correct provider and shares reads", async () => {
   const sent = [],
     sockets = [],
     counts = { claude: 0, codex: 0 },
@@ -83,6 +83,8 @@ test("Stream Deck routes all four actions to the correct provider and shares rea
     ["cl-reset", "resets"],
     ["cx-week", "codex-weekly"],
     ["cx-reset", "codex-resets"],
+    ["cl-time", "claude-countdown"],
+    ["cx-time", "codex-countdown"],
   ])
     socket.emit(
       "message",
@@ -109,6 +111,9 @@ test("Stream Deck routes all four actions to the correct provider and shares rea
   assert.match(svg("cx-week"), />75%</);
   assert.match(svg("cl-reset"), />none</);
   assert.match(svg("cx-reset"), />R2</);
+  assert.match(svg("cl-time"), />Claude</);
+  assert.match(svg("cx-time"), />Codex</);
+  assert.doesNotMatch(svg("cl-time") + svg("cx-time"), /%/);
   socket.emit(
     "message",
     Buffer.from(JSON.stringify({ event: "keyDown", context: "cx-week" })),

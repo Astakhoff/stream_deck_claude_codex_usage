@@ -19,6 +19,7 @@ Unit tests use synthetic data and do not read Keychain or call Anthropic. `npm r
 - `com.local.claude-desktop-week.sdPlugin/bin/desktop.js`: Claude credential reader and usage fetch.
 - `com.local.claude-desktop-week.sdPlugin/bin/codex.js`: Codex local login reader, usage/reset fetches, and parsers.
 - `com.local.claude-desktop-week.sdPlugin/bin/poller.js`: per-provider scheduling and retained-reading isolation.
+- `com.local.claude-desktop-week.sdPlugin/bin/countdown.js`: dedicated days/hours countdown renderer.
 - `com.local.claude-desktop-week.sdPlugin/bin/render.js`: weekly button and color rules.
 - `com.local.claude-desktop-week.sdPlugin/bin/resets.js`: reset inventory parsing and rendering.
 - `com.local.claude-desktop-week.sdPlugin/bin/plugin.js`: Stream Deck protocol and shared polling.

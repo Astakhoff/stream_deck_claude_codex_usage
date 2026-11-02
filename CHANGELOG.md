@@ -1,5 +1,11 @@
 # Changelog
 
+## 1.4.0 — 2026-11-02
+
+- Add separate Claude and Codex weekly countdown actions: Week heading, large days/hours, and provider footer.
+- Reuse existing provider polls without extra network requests.
+- Handle the last partial hour, elapsed deadlines, and stale data explicitly.
+
 ## 1.3.1 — 2026-11-02
 
 - Rename the plugin and action category to Claude & Codex Weekly Usage.
