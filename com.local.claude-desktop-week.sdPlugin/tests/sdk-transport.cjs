@@ -14,7 +14,7 @@ test('official SDK transport registers, routes keys, persists mode and targets t
   await once(server,'listening');
   let child;
   t.after(async()=>{ child?.kill(); for(const c of server.clients)c.terminate(); await new Promise(r=>server.close(r)); await fs.rm(temp,{recursive:true,force:true}); });
-  const entry = path.resolve(__dirname,'../bin/marketplace-plugin.mjs');
+  const entry = process.env.WEEKLY_SDK_TEST_ENTRY || path.resolve(__dirname,'../bin/marketplace-plugin.mjs');
   const bootstrap = path.join(temp,'bootstrap.mjs');
   await fs.writeFile(bootstrap, `import { createRequire } from 'node:module';\nconst req=createRequire(${JSON.stringify(pathToFileURL(entry).href)});\nfor(const name of ['./desktop','./codex']){req(name);req.cache[req.resolve(name)].exports={fetchUsage:async()=>({remaining:36,resetsAt:'2099-12-01T00:00Z',fetchedAt:Date.now(),resetCredits:{known:true,grants:[]}})}}\nawait import(${JSON.stringify(pathToFileURL(entry).href)});`);
   const connected=once(server,'connection');

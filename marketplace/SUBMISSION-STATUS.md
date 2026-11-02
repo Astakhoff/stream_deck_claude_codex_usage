@@ -18,12 +18,13 @@ No public Marketplace product URL is available yet.
 4. **Links:** Privacy policy, installation guide, support issues, and open-source repository linked.
 5. **Media:** Uploaded the 288 × 288 app icon, 1920 × 960 cover, and three 1920 × 960 gallery illustrations. Sample data is clearly labeled.
 6. **Release:** Added release notes and a link to detailed AI disclosure/reviewer notes; submitted with automatic publication disabled.
-7. **Validation:** 51 tests pass, including a loopback integration test of the real official SDK. Runtime npm audit reports zero vulnerabilities. Both direct and Marketplace packages pass Elgato validation/packaging. CI passed for the implementation commit.
+7. **Protected-package check:** Downloaded the processed DRM package from Maker Console and reran the real-SDK loopback test against its extracted entry point. Registration, key rendering, Remaining / Used persistence, and inspector routing pass with synthetic data. This is not an on-device test of the protected installation.
+8. **Validation:** 51 tests pass, including a loopback integration test of the real official SDK. Runtime npm audit reports zero vulnerabilities. Both direct and Marketplace packages pass Elgato validation/packaging. CI passed for the implementation commit.
 
 ## Remaining external stages
 
 - Elgato moderation and any requested changes.
-- Download and test the processed DRM package once Maker Console finishes processing it. The processed package was not available immediately after submission; pre-upload tests are not a substitute for a protected-package test.
+- Perform an on-device smoke test of the protected installation before the final public release. The downloaded processed package has passed the loopback SDK integration test.
 - Supply a real interaction video if required by the reviewers. The submitted gallery consists of three labeled illustrations; no interactive live demonstration video has been submitted. The official review guide requires a functional demonstration for integrations with paid services. A still account capture is not presented as such a demonstration.
 - After approval and protected-package verification, manually release the approved version to make it public.
 
