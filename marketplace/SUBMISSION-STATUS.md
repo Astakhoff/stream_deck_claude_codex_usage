@@ -31,3 +31,7 @@ No public Marketplace product URL is available yet.
 ## Evidence
 
 The local output folder contains the submitted materials, installer checksum, and a screenshot of the Pending review status. Account credentials, account-profile screenshots, and personal Stream Deck profiles are not published in this repository.
+
+## Listing clarification
+
+The saved Marketplace description now begins with "Weekly limits only" and explicitly excludes hourly, 5-hour session, daily, and other short-window usage limits. It explains that days/hours are a countdown to the weekly reset.

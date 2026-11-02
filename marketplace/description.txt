@@ -1,7 +1,9 @@
-Keep Claude and Codex weekly usage in view on your Stream Deck. See remaining or used capacity, saved resets with expiry dates, and time until the next weekly budget reset. Press a percentage key to switch between Remaining and Used; the bar changes with it.
+Weekly limits only. Monitor Claude and Codex weekly (7-day) usage on your Stream Deck. This plugin does not track hourly, 5-hour session, daily, or other short-window usage limits.
 
-Six actions cover Claude and Codex independently. Customize warning colors and thresholds, see compact days/hours countdowns, and read exact reset times in your local timezone. Visible actions check every minute, subject to service retry delays.
+See remaining or used weekly capacity with a matching progress bar. Press a percentage key to toggle Remaining and Used. Days and hours show time until the weekly budget resets; they are not hourly usage limits. Separate actions show the exact weekly reset time and saved resets with expiry dates.
 
-Free and open source. Requires macOS 13+, Stream Deck 6.9+, and an eligible Claude and/or Codex subscription with usage data. Uses an existing Claude Desktop login or file-backed Codex ChatGPT login. No manual session-key entry. Reads local credentials only to query the corresponding provider; no developer server or telemetry. No Windows support. Internal service interfaces may change; account and reset availability vary. This monitor cannot redeem resets.
+Six actions cover Claude and Codex independently. Customize warning colors and thresholds. Visible actions check every minute, subject to service retry delays.
+
+Free and open source. Requires macOS 13+, Stream Deck 6.9+, and an eligible Claude and/or Codex subscription with weekly usage data. Uses an existing Claude Desktop login or file-backed Codex ChatGPT login. No manual session-key entry. Reads local credentials only to query the corresponding provider; no developer server or telemetry. No Windows support. Internal service interfaces may change; account and reset availability vary. This monitor cannot redeem resets.
 
 Developed with substantial OpenAI Codex assistance in code, tests, documentation, and artwork, under human product direction and on-device evaluation. Independent community project; not affiliated with or endorsed by Anthropic or OpenAI.

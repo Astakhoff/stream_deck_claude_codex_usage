@@ -1,5 +1,8 @@
 # Installation guide
 
+This plugin monitors **weekly (7-day) limits only**. Hourly, 5-hour session, daily, and other short-window usage limits are not tracked. The days/hours display is a countdown to the weekly reset.
+
+
 ## 1. Install Stream Deck
 
 1. Open [Elgato's official downloads page](https://www.elgato.com/us/en/s/downloads).

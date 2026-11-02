@@ -1,5 +1,8 @@
 # Claude & Codex Weekly Usage
 
+**Weekly limits only.** This plugin monitors weekly (7-day) usage limits. It does not track hourly, 5-hour session, daily, or other short-window usage limits. Days and hours on keys count down to the weekly reset.
+
+
 <img src="docs/images/brand-logo.png" width="96" height="96" alt="AI weekly usage logo" />
 
 A small, local Stream Deck plugin for checking AI subscription capacity without copying session keys.

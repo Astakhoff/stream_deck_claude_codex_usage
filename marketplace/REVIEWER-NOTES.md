@@ -10,6 +10,10 @@
 - Historical direct-distribution UUID: `com.local.claude-desktop-week`.
 - Both packages share the same polling, rendering, and action logic. Marketplace uses the official @elgato/streamdeck v2 transport, SDKVersion 3, and a minimum Stream Deck version of 6.9 for DRM compatibility. The direct installer retains the raw WebSocket transport and Stream Deck 6.6 minimum. Marketplace uses an author-qualified UUID. Existing direct-distribution installations retain their identity; switching channels requires adding the Marketplace actions to the profile. The two channels may coexist and poll separately.
 
+## Scope
+
+Weekly (7-day) usage limits only. Hourly, 5-hour session, daily, and other short-window usage limits are not tracked. Days/hours on keys indicate time until the weekly reset. Saved-reset inventory is a separate read-only action.
+
 ## Setup and verification
 
 Use a reviewer-owned eligible Claude subscription in Claude Desktop, and/or a Codex ChatGPT login stored in `~/.codex/auth.json` (`CODEX_HOME` is respected). File-backed subscription credentials are required for Codex; API-key-only and Keychain-only login storage are not supported. Each provider works independently. Add its weekly percentage, saved resets, and countdown actions. macOS may prompt for Claude Keychain access.
