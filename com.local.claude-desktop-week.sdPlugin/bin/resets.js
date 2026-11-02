@@ -72,7 +72,6 @@ function renderResets(data, config = {}, error, now = Date.now()) {
   const accent = /^#[0-9a-f]{6}$/i.test(config.greenColor)
     ? config.greenColor
     : "#55e58c";
-  const ru = false;
   let date = "";
   if (has && credits.expiresAt)
     date = new Intl.DateTimeFormat("en-US", { month: "short", day: "numeric" })

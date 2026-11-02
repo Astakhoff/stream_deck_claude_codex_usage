@@ -1,6 +1,6 @@
 # Contributing
 
-Use English for documentation, code comments, interface text, issues, and pull requests.
+Use English for documentation, code comments, interface text, issues, and pull requests. The product is English-only: do not add language selectors or locale-dependent interface text. Format user-visible dates and times explicitly with `en-US`, while retaining the user’s system timezone.
 
 ## Setup and validation
 

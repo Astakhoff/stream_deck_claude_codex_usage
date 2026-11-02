@@ -138,11 +138,13 @@
               grant.count +
               " × " +
               (grant.expiresAt
-                ? "expires " + new Date(grant.expiresAt).toLocaleString()
+                ? "expires " + new Date(grant.expiresAt).toLocaleString("en-US")
                 : "no expiry provided");
         }
         if (data?.fetchedAt)
-          text += "\nChecked: " + new Date(data.fetchedAt).toLocaleTimeString();
+          text +=
+            "\nChecked: " +
+            new Date(data.fetchedAt).toLocaleTimeString("en-US");
         if (error) text += "\n" + error;
         document.getElementById("status").textContent = text;
       };

@@ -6,6 +6,7 @@
 - Add an original AI/key/usage-bar logo and matching monochrome calendar and reset action icons.
 - Export transparent category icons at 28/56 px and action icons at 20/40 px.
 - Keep all plugin and action UUIDs unchanged for existing installations.
+- Enforce English-only interface and date formatting; remove legacy language settings.
 
 ## 1.3.0 — 2026-11-02
 

@@ -22,6 +22,7 @@ The previews use example values and dates, not a real account snapshot.
 - Automatic use of the existing Claude Desktop login and local Codex ChatGPT login on the same Mac.
 - Explicit unavailable/stale states instead of treating errors as zero resets.
 - Read-only monitoring: pressing a key checks usage; it does not redeem a reset.
+- English-only interface, documentation, status labels, and date formatting; no language selector.
 
 ## Install
 

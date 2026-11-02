@@ -183,9 +183,9 @@
             ? "Remaining " +
               Math.round(data.remaining) +
               "% · Resets " +
-              new Date(data.resetsAt).toLocaleString() +
+              new Date(data.resetsAt).toLocaleString("en-US") +
               " · Checked " +
-              new Date(data.fetchedAt).toLocaleTimeString()
+              new Date(data.fetchedAt).toLocaleTimeString("en-US")
             : "Waiting for usage data";
         if (error) status.textContent += " · " + error;
       };
