@@ -37,7 +37,7 @@ You can use either provider independently; a missing Claude login does not preve
 1. Open [Releases](https://github.com/Astakhoff/stream_deck_claude_codex_usage/releases/latest).
 2. Download the file ending in `.streamDeckPlugin`.
 3. Open the file with the Stream Deck app and follow its installation prompts.
-4. Search for **Claude & Codex Usage** in the actions list.
+4. Search for **Claude & Codex Weekly Usage** in the actions list.
 5. Drag the **Claude weekly remaining / Claude saved resets** and/or **Codex weekly remaining / Codex saved resets** actions onto empty keys.
 6. Wait for the first reading. If macOS requests access to **Claude Safe Storage**, review and approve the request if you trust the plugin.
 

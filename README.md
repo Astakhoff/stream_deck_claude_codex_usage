@@ -1,4 +1,6 @@
-# Stream Deck Claude / Codex Usage
+# Claude & Codex Weekly Usage
+
+<img src="docs/images/brand-logo.png" width="96" height="96" alt="AI weekly usage logo" />
 
 A small, local Stream Deck plugin for checking AI subscription capacity without copying session keys.
 
@@ -26,7 +28,7 @@ The previews use example values and dates, not a real account snapshot.
 1. [Install and connect Stream Deck](docs/INSTALLATION.md#1-install-stream-deck).
 2. Sign in to Claude Desktop and/or Codex with the subscription account you want to monitor. Codex requires a local file-backed ChatGPT login; see the installation guide.
 3. Download the `.streamDeckPlugin` installer from the [latest release](https://github.com/Astakhoff/stream_deck_claude_codex_usage/releases/latest) and open it with Stream Deck.
-4. In Stream Deck, find **Claude & Codex Usage** and drag the desired provider’s weekly and reset actions onto keys.
+4. In Stream Deck, find **Claude & Codex Weekly Usage** and drag the desired provider’s weekly and reset actions onto keys.
 5. If macOS asks for access to **Claude Safe Storage**, review the request and allow access if you trust this plugin.
 
 For a manual installation, source checkout, updates, removal, and troubleshooting, see the [installation guide](docs/INSTALLATION.md).

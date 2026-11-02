@@ -1,0 +1,10 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 28 28" fill="none">
+  <title>AI weekly usage</title>
+  <rect x="2" y="2" width="24" height="24" rx="5.5" stroke="#FFFFFF" stroke-width="1.75"/>
+  <g stroke="#FFFFFF" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M6.3 17 10.1 8.2 13.9 17M7.8 13.7h4.6"/>
+    <path d="M18.4 8.2V17M16.8 8.2H20M16.8 17H20"/>
+  </g>
+  <path d="M7 21h14" stroke="#FFFFFF" stroke-opacity=".3" stroke-width="1.8" stroke-linecap="round"/>
+  <path d="M7 21h8" stroke="#FFFFFF" stroke-width="1.8" stroke-linecap="round"/>
+</svg>

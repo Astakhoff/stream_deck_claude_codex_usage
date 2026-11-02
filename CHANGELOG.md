@@ -1,5 +1,12 @@
 # Changelog
 
+## 1.3.1 — 2026-11-02
+
+- Rename the plugin and action category to Claude & Codex Weekly Usage.
+- Add an original AI/key/usage-bar logo and matching monochrome calendar and reset action icons.
+- Export transparent category icons at 28/56 px and action icons at 20/40 px.
+- Keep all plugin and action UUIDs unchanged for existing installations.
+
 ## 1.3.0 — 2026-11-02
 
 - Add Codex weekly remaining capacity and saved reset inventory using the existing local ChatGPT login.

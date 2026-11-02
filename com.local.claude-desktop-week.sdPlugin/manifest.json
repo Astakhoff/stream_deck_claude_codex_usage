@@ -1,13 +1,13 @@
 {
   "$schema": "https://schemas.elgato.com/streamdeck/plugins/manifest.json",
   "UUID": "com.local.claude-desktop-week",
-  "Name": "Claude & Codex Usage",
-  "Version": "1.3.0.0",
+  "Name": "Claude & Codex Weekly Usage",
+  "Version": "1.3.1.0",
   "Author": "Astakhoff",
   "Description": "Claude and Codex weekly remaining capacity and saved resets using local logins.",
-  "Category": "Claude & Codex Usage",
-  "CategoryIcon": "imgs/category",
-  "Icon": "imgs/plugin",
+  "Category": "Claude & Codex Weekly Usage",
+  "CategoryIcon": "imgs/ai-weekly-category",
+  "Icon": "imgs/ai-weekly-plugin",
   "CodePath": "bin/plugin.js",
   "OS": [
     {
@@ -26,7 +26,7 @@
     {
       "Name": "Claude weekly remaining",
       "UUID": "com.local.claude-desktop-week.weekly",
-      "Icon": "imgs/action",
+      "Icon": "imgs/weekly-action",
       "Controllers": ["Keypad"],
       "Tooltip": "Remaining weekly capacity; refreshes every minute using Claude Desktop.",
       "PropertyInspectorPath": "ui/settings.html",
@@ -40,7 +40,7 @@
     {
       "Name": "Claude saved resets",
       "UUID": "com.local.claude-desktop-week.resets",
-      "Icon": "imgs/resets",
+      "Icon": "imgs/reset-action",
       "Controllers": ["Keypad"],
       "Tooltip": "Saved Claude resets and earliest expiry. Read only; refreshes every minute.",
       "PropertyInspectorPath": "ui/resets.html",
@@ -54,7 +54,7 @@
     {
       "Name": "Codex weekly remaining",
       "UUID": "com.local.claude-desktop-week.codex-weekly",
-      "Icon": "imgs/action",
+      "Icon": "imgs/weekly-action",
       "Controllers": ["Keypad"],
       "Tooltip": "Read-only Codex weekly monitor using the local Codex login.",
       "PropertyInspectorPath": "ui/settings.html",
@@ -68,7 +68,7 @@
     {
       "Name": "Codex saved resets",
       "UUID": "com.local.claude-desktop-week.codex-resets",
-      "Icon": "imgs/resets",
+      "Icon": "imgs/reset-action",
       "Controllers": ["Keypad"],
       "Tooltip": "Read-only Codex resets monitor using the local Codex login.",
       "PropertyInspectorPath": "ui/resets.html",
