@@ -1,6 +1,6 @@
 {
   "name": "stream-deck-claude-codex-usage",
-  "version": "1.6.3",
+  "version": "1.6.4",
   "private": true,
   "license": "MIT",
   "scripts": {

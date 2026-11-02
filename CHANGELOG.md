@@ -1,5 +1,10 @@
 # Changelog
 
+## 1.6.4 — 2026-11-02
+
+- Show days and hours together on one line on dedicated countdown keys.
+- Enlarge the reset weekday and local time at the bottom.
+
 ## 1.6.3 — 2026-11-02
 
 - Remove stale labels from percentage, reset, and countdown keys.

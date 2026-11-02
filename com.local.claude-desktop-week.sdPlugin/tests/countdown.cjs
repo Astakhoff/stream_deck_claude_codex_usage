@@ -47,8 +47,7 @@ test("large time and reset clock without provider names or percentage", () => {
       now,
     );
     assert.match(svg, />Week</);
-    assert.match(svg, />4d</);
-    assert.match(svg, />10h</);
+    assert.match(svg, />4d 10h</);
     assert.doesNotMatch(svg, /Claude|Codex/);
     assert.doesNotMatch(svg, /%/);
   }
@@ -61,7 +60,7 @@ test("countdown does not depend on capacity, so zero budget still has its reset 
       null,
       now,
     ),
-    />4d</,
+    />4d 10h</,
   ));
 test("last hour, stale data and errors remain truthful", () => {
   assert.match(
@@ -71,7 +70,7 @@ test("last hour, stale data and errors remain truthful", () => {
       null,
       now,
     ),
-    />&lt;1h</,
+    />0d &lt;1h</,
   );
   assert.match(
     renderCountdown({ resetsAt: reset, fetchedAt: now }, {}, "OFFLINE", now),
