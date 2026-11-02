@@ -1,5 +1,7 @@
 # Marketplace submission
 
+See [submission status](SUBMISSION-STATUS.md) for completed stages, review state, and remaining external steps.
+
 This directory contains the English listing materials for **Claude & Codex Weekly Usage**, published by **Astakhoff** as a free macOS plugin.
 
 ## Files

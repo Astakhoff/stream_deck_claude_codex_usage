@@ -32,4 +32,4 @@ AI assistance was substantial: Codex generated and modified implementation, test
 
 ## Media and demonstration
 
-Listing artwork depicts the real renderers using clearly marked illustrative sample data. It is not evidence of a live authenticated session. A demonstration of paid-service integration may be requested or required during review; do not label illustrative media as live verification. No account credentials are supplied with the package.
+Listing artwork depicts the real renderers using clearly marked illustrative sample data. It is not evidence of a live authenticated session. A demonstration of paid-service integration may be requested or required during review; the three submitted gallery images are illustrations, not a recorded interaction demo. Do not label illustrative media as live verification. No account credentials are supplied with the package.
