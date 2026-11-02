@@ -79,11 +79,11 @@ Install the generated file in `dist/` using either method above.
 Select a key in Stream Deck to view its settings below the key grid.
 
 - **Weekly remaining:** select **Remaining** or **Used** under **Percentage display**. The number and bar follow the selected mode. Change yellow, red, and critical thresholds and the four colors; these warning thresholds always refer to remaining capacity. Each key has its own display setting, and existing keys default to Remaining.
-- **Weekly countdown:** change the accent color. The key shows Week, days/hours, and its provider; no percentage is shown.
+- **Weekly countdown:** change the accent color. The key shows Week, days/hours, the reset weekday and 24-hour time in your system timezone, and its provider; no percentage is shown.
 - **Saved resets:** change the expiry text color. The settings panel lists each counted grant and its expiry.
 - **Check now:** requests a reading when the shared one-minute interval allows it. It respects server retry delays.
 
-Keys share polling within each provider. Claude makes one request per poll; Codex makes one usage request and one reset-inventory request. The providers have independent cooldowns and error states. An inactive provider is not polled. The bottom `HH:MM` on the weekly key is the remainder after full days; it is not a clock time.
+Keys share polling within each provider. Claude makes one request per poll; Codex makes one usage request and one reset-inventory request. The providers have independent cooldowns and error states. An inactive provider is not polled. Percentage keys show a relative `6d 13h` countdown. Dedicated Weekly countdown keys also show the exact reset weekday and 24-hour time in your system timezone.
 
 ## Updating
 

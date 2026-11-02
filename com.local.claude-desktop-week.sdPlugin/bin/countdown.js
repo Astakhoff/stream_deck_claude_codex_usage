@@ -9,6 +9,19 @@ function remainingTime(resetsAt, now = Date.now()) {
     underOneHour: totalHours === 0,
   };
 }
+function resetClock(resetsAt, timeZone) {
+  const reset = Date.parse(resetsAt);
+  if (!Number.isFinite(reset)) return "";
+  const parts = new Intl.DateTimeFormat("en-US", {
+    weekday: "short",
+    hour: "2-digit",
+    minute: "2-digit",
+    hourCycle: "h23",
+    ...(timeZone ? { timeZone } : {}),
+  }).formatToParts(new Date(reset));
+  const part = (type) => parts.find((p) => p.type === type)?.value || "";
+  return `${part("weekday")} ${part("hour")}:${part("minute")}`;
+}
 function renderCountdown(data, config = {}, error, now = Date.now()) {
   const time = remainingTime(data?.resetsAt, now);
   const stale = time && (!!error || now - data.fetchedAt > 150000);
@@ -26,10 +39,11 @@ function renderCountdown(data, config = {}, error, now = Date.now()) {
     DESKTOP_CHANGED: "Update needed",
   };
   const hours = time?.underOneHour ? "&lt;1h" : `${time?.hours}h`;
+  const clock = time ? resetClock(data.resetsAt) : "";
   const reason =
     data?.resetsAt && Date.parse(data.resetsAt) <= now
       ? "Refreshing"
       : labels[error] || "No data";
-  return `<svg xmlns="http://www.w3.org/2000/svg" width="144" height="144" viewBox="0 0 144 144"><defs><radialGradient id="bg"><stop stop-color="#1b2335"/><stop offset="1" stop-color="#0c111d"/></radialGradient></defs><rect width="144" height="144" rx="16" fill="url(#bg)"/><g font-family="Arial, Helvetica, sans-serif" text-anchor="middle" font-weight="800"><text x="72" y="26" font-size="${stale ? 17 : 21}" fill="${color}">${stale ? "Week · stale" : "Week"}</text><text x="72" y="77" font-size="48" fill="${time ? "#f3f8ff" : "#91a1b9"}">${time ? time.days + "d" : "—"}</text><text x="72" y="111" font-size="${time ? 35 : 16}" fill="#e5edf8">${time ? hours : reason}</text><text x="72" y="136" font-size="17" fill="${color}">${provider}</text></g></svg>`;
+  return `<svg xmlns="http://www.w3.org/2000/svg" width="144" height="144" viewBox="0 0 144 144"><defs><radialGradient id="bg"><stop stop-color="#1b2335"/><stop offset="1" stop-color="#0c111d"/></radialGradient></defs><rect width="144" height="144" rx="16" fill="url(#bg)"/><g font-family="Arial, Helvetica, sans-serif" text-anchor="middle" font-weight="800"><text x="72" y="26" font-size="${stale ? 17 : 21}" fill="${color}">${stale ? "Week · stale" : "Week"}</text><text x="72" y="68" font-size="43" fill="${time ? "#f3f8ff" : "#91a1b9"}">${time ? time.days + "d" : "—"}</text><text x="72" y="99" font-size="${time ? 31 : 16}" fill="#e5edf8">${time ? hours : reason}</text><text x="72" y="117" font-size="13" fill="#aab9d0">${clock}</text><text x="72" y="138" font-size="17" fill="${color}">${provider}</text></g></svg>`;
 }
-module.exports = { remainingTime, renderCountdown };
+module.exports = { remainingTime, resetClock, renderCountdown };

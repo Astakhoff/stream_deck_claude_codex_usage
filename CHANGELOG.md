@@ -1,5 +1,11 @@
 # Changelog
 
+## 1.6.0 — 2026-11-02
+
+- Use a single live days/hours countdown, such as 6d 13h, on percentage keys.
+- Show exact reset weekday and local 24-hour time on dedicated Weekly countdown keys.
+- Retain provider labels and English-only formatting.
+
 ## 1.5.0 — 2026-11-02
 
 - Add a per-key Remaining / Used display setting for Claude and Codex percentage actions.

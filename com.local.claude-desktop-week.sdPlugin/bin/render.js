@@ -1,4 +1,5 @@
 "use strict";
+const { remainingTime } = require("./countdown");
 const defaults = {
   percentMode: "remaining",
   yellow: 50,
@@ -35,15 +36,12 @@ function colorFor(remaining, s) {
         : s.greenColor;
 }
 function countdown(reset, now) {
-  const minutes = Math.max(0, Math.ceil((Date.parse(reset) - now) / 60000));
-  const days = Math.floor(minutes / 1440),
-    hours = Math.floor((minutes % 1440) / 60),
-    mins = minutes % 60;
+  const time = remainingTime(reset, now);
   return {
-    main: days ? `${days} ${days === 1 ? "day" : "days"}` : `${hours} hours`,
-    sub: days
-      ? `${String(hours).padStart(2, "0")}:${String(mins).padStart(2, "0")}`
-      : `${mins} min`,
+    main: time
+      ? `${time.days}d ${time.underOneHour ? "<1h" : time.hours + "h"}`
+      : "No data",
+    sub: "",
   };
 }
 function render(data, raw, error, now = Date.now()) {
@@ -79,6 +77,6 @@ function render(data, raw, error, now = Date.now()) {
         ? "STALE"
         : errors[error] || "Refreshing"
       : time.sub;
-  return `<svg xmlns="http://www.w3.org/2000/svg" width="144" height="144" viewBox="0 0 144 144"><defs><radialGradient id="bg"><stop stop-color="#1b2335"/><stop offset="1" stop-color="#0c111d"/></radialGradient></defs><rect width="144" height="144" rx="16" fill="url(#bg)"/><g font-family="Arial, Helvetica, sans-serif" text-anchor="middle"><text x="72" y="28" font-size="21" font-weight="700" fill="${color}">${"Week"}</text><text x="72" y="77" font-size="51" font-weight="800" letter-spacing="-2" fill="${valid ? "#f3f8ff" : "#91a1b9"}">${valid ? Math.round(percent) + "%" : "—"}</text><rect x="21" y="87" width="102" height="9" rx="4.5" fill="#303c51"/>${valid && percent > 0 ? `<rect x="21" y="87" width="${(102 * percent) / 100}" height="9" rx="4.5" fill="${color}"/>` : ""}<text x="72" y="117" font-size="20" font-weight="700" fill="#e5edf8">${time.main}</text><text x="72" y="135" font-size="13" font-weight="600" fill="${stale || expired ? "#ffcf65" : "#aab9d0"}">${foot}</text></g></svg>`;
+  return `<svg xmlns="http://www.w3.org/2000/svg" width="144" height="144" viewBox="0 0 144 144"><defs><radialGradient id="bg"><stop stop-color="#1b2335"/><stop offset="1" stop-color="#0c111d"/></radialGradient></defs><rect width="144" height="144" rx="16" fill="url(#bg)"/><g font-family="Arial, Helvetica, sans-serif" text-anchor="middle"><text x="72" y="28" font-size="21" font-weight="700" fill="${color}">${"Week"}</text><text x="72" y="77" font-size="51" font-weight="800" letter-spacing="-2" fill="${valid ? "#f3f8ff" : "#91a1b9"}">${valid ? Math.round(percent) + "%" : "—"}</text><rect x="21" y="87" width="102" height="9" rx="4.5" fill="#303c51"/>${valid && percent > 0 ? `<rect x="21" y="87" width="${(102 * percent) / 100}" height="9" rx="4.5" fill="${color}"/>` : ""}<text x="72" y="117" font-size="20" font-weight="700" fill="#e5edf8">${time.main.replaceAll("<", "&lt;")}</text><text x="72" y="135" font-size="13" font-weight="600" fill="${stale || expired ? "#ffcf65" : "#aab9d0"}">${foot}</text></g></svg>`;
 }
 module.exports = { render, settings, defaults, colorFor, countdown };

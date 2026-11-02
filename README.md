@@ -54,7 +54,7 @@ Claude Desktop's credential cache and the Anthropic/OpenAI usage endpoints are i
 
 ### Weekly remaining
 
-The default **Remaining** mode shows the capacity left: `37%` means **37% left**. Select **Used** in the key settings to show the spent capacity instead: the same reading becomes **63% used**. The bar follows the selected value—shrinking in Remaining mode and filling in Used mode. `4 days` with `11:08` underneath means four full days, eleven hours, and eight minutes until the weekly reset. The countdown uses the reset timestamp returned by the server.
+The default **Remaining** mode shows the capacity left: `37%` means **37% left**. Select **Used** in the key settings to show the spent capacity instead: the same reading becomes **63% used**. The bar follows the selected value—shrinking in Remaining mode and filling in Used mode. `6d 13h` below the bar is a live relative countdown: six full days and thirteen hours until reset. There is no clock-time line on percentage keys. The countdown uses the reset timestamp returned by the server.
 
 | Remaining capacity | Default color |
 | ------------------ | ------------- |
@@ -69,7 +69,7 @@ Select the key in Stream Deck to choose **Remaining / Used**, then change thresh
 
 ### Weekly countdown
 
-A separate key shows **Week** at the top, full days and remaining hours in large text, and **Claude** or **Codex** at the bottom. For example, `4d` / `10h` means four days and ten full hours until the next weekly budget reset. The last partial hour shows `<1h`. No percentage or progress bar is shown on this key.
+A separate key shows **Week** at the top, full days and remaining hours in large text, and **Claude** or **Codex** at the bottom. For example, `4d` / `10h` means four days and ten full hours until the next weekly budget reset. The smaller line shows the exact reset weekday and 24-hour time (for example, `Fri 21:00`) in your system timezone. The last partial hour shows `<1h`. No percentage or progress bar is shown on this key.
 
 The countdown uses the same weekly reset timestamp and shared polling as the percentage key, so adding it does not increase network requests. An elapsed deadline is hidden until a new valid period arrives. Select the key to change its accent color.
 

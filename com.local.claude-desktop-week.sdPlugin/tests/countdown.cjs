@@ -1,6 +1,10 @@
 const { test } = require("node:test"),
   assert = require("node:assert/strict");
-const { remainingTime, renderCountdown } = require("../bin/countdown");
+const {
+  remainingTime,
+  resetClock,
+  renderCountdown,
+} = require("../bin/countdown");
 const now = Date.parse("2026-11-02T05:00Z");
 const reset = "2026-11-06T15:00Z";
 test("countdown uses full days and remainder hours without rounding up", () =>
@@ -97,5 +101,33 @@ test("last hour, stale data and errors remain truthful", () => {
       now,
     ),
     />Refreshing</,
+  );
+});
+
+test("reset clock is English, 24-hour and converted to the requested timezone", () => {
+  assert.equal(resetClock(reset, "UTC"), "Fri 15:00");
+  assert.equal(resetClock(reset, "Asia/Dubai"), "Fri 19:00");
+  assert.equal(resetClock("invalid", "UTC"), "");
+});
+test("dedicated countdown includes a reset clock, but percentage key only has relative time", () => {
+  const { render, countdown } = require("../bin/render");
+  const data = { remaining: 37, resetsAt: reset, fetchedAt: now };
+  assert.match(renderCountdown(data, {}, null, now), /Fri \d{2}:\d{2}/);
+  const svg = render(data, {}, null, now);
+  assert.match(svg, />4d 10h</);
+  assert.doesNotMatch(svg, /\d{2}:\d{2}/);
+  assert.equal(countdown(reset, now + 3600000).main, "4d 9h");
+  assert.equal(
+    countdown(new Date(now + 3599999).toISOString(), now).main,
+    "0d <1h",
+  );
+  assert.match(
+    render(
+      { ...data, resetsAt: new Date(now + 1000).toISOString() },
+      {},
+      null,
+      now,
+    ),
+    /0d &lt;1h/,
   );
 });

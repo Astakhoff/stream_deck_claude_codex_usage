@@ -48,10 +48,10 @@ test("invalid configuration cannot inject SVG and uses defaults", () => {
   assert.equal(s.greenColor, "#55e58c");
   assert.equal(s.yellow, 50);
 });
-test("countdown has full days and remaining hours/minutes", () =>
+test("percentage countdown uses compact days and hours", () =>
   assert.deepEqual(countdown(reset, now, false), {
-    main: "4 days",
-    sub: "12:00",
+    main: "4d 12h",
+    sub: "",
   }));
 test("stale and reset states clearly marked", () => {
   const d = { remaining: 37, resetsAt: reset, fetchedAt: now };
