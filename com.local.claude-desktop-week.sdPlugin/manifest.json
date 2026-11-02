@@ -2,7 +2,7 @@
   "$schema": "https://schemas.elgato.com/streamdeck/plugins/manifest.json",
   "UUID": "com.local.claude-desktop-week",
   "Name": "Claude & Codex Weekly Usage",
-  "Version": "1.6.1.0",
+  "Version": "1.6.2.0",
   "Author": "Astakhoff",
   "Description": "Claude and Codex weekly remaining capacity and saved resets using local logins.",
   "Category": "Claude & Codex Weekly Usage",

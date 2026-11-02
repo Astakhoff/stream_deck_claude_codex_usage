@@ -1,5 +1,9 @@
 # Changelog
 
+## 1.6.2 — 2026-11-02
+
+- Enlarge the days/hours countdown below the percentage bar.
+
 ## 1.6.1 — 2026-11-02
 
 - Remove Claude / Codex footers from weekly countdown keys.
