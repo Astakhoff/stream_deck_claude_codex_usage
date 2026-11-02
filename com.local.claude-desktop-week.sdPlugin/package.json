@@ -1,12 +1,16 @@
 {
   "name": "claude-desktop-week",
-  "version": "1.7.0",
+  "version": "1.8.0",
   "private": true,
   "dependencies": {
+    "@elgato/streamdeck": "2.1.2",
     "ws": "^8.22.1"
   },
   "license": "MIT",
   "scripts": {
     "test": "node --test tests/*.cjs"
+  },
+  "overrides": {
+    "zod": "4.6.6"
   }
 }

@@ -1,5 +1,5 @@
 "use strict";
-const WebSocket = require("ws");
+const WebSocket = require("./transport").getTransport();
 const fs = require("node:fs");
 const path = require("node:path");
 const { fetchUsage: fetchClaude } = require("./desktop");

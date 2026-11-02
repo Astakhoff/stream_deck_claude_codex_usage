@@ -1,0 +1,10 @@
+First Marketplace release.
+
+- Weekly percentage, saved-reset inventory, and countdown actions for Claude and Codex.
+- Press percentage keys to toggle Remaining / Used, with matching progress bars and saved per-key preferences.
+- Warning thresholds based on remaining capacity, with customizable colors.
+- One-line days/hours countdowns and enlarged local reset weekday/time.
+- Shared 60-second polling while visible, independent provider cooldowns, and update diagnostics in action settings.
+- English interface and documentation. macOS only.
+
+Uses existing local logins. No manual session key, developer telemetry, or reset redemption. Developed with substantial Codex assistance; see the linked AI disclosure.

@@ -10,4 +10,6 @@ The usage endpoint and credential cache are internal interfaces. Schema or authe
 
 ## Build tooling
 
-The release runtime dependency (`ws`) is audited separately from development tooling. At initial publication, npm reported a moderate denial-of-service advisory in the official Elgato CLI's transitive `minimatch` dependency and its dependency chain. The CLI is used locally/CI for validation and packaging of this repository's controlled files; it is not included in plugin installers. Avoid feeding untrusted glob patterns into build tools. Update the pinned CLI when the upstream dependency is fixed.
+Release runtime dependencies (`ws` and the official Elgato SDK) are audited separately from development tooling. At initial publication, npm reported a moderate denial-of-service advisory in the official Elgato CLI's transitive `minimatch` dependency and its dependency chain. The CLI is used locally/CI for validation and packaging of this repository's controlled files; it is not included in plugin installers. Avoid feeding untrusted glob patterns into build tools. Update the pinned CLI when the upstream dependency is fixed.
+
+The SDK 2 dependency tree requests Zod 3, which contains an affected v4-mini implementation. This project overrides Zod to patched version 4.6.6; the SDK uses its compatible `zod/v4-mini` export. An integration test exercises the real SDK connection, settings, UI messages, and key events with synthetic data.

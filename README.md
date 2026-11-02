@@ -106,3 +106,7 @@ See [CONTRIBUTING.md](CONTRIBUTING.md) for the project layout and contribution w
 ## License
 
 [MIT](LICENSE). This is an unofficial community project, not affiliated with Anthropic, OpenAI, or Elgato. Product names belong to their respective owners.
+
+## Marketplace distribution
+
+The [Marketplace submission materials](marketplace/README.md) include artwork, listing text, privacy information, AI assistance disclosure, and the author-qualified build instructions. The Marketplace build requires Stream Deck 6.9+ and uses the official SDK transport; the direct installer retains its original UUID and Stream Deck 6.6+ compatibility. These are separate install channels.

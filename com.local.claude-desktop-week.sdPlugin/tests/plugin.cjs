@@ -35,8 +35,8 @@ test("Stream Deck routes all six actions to the correct provider and shares read
     "utf8",
   );
   const req = (name) =>
-    name === "ws"
-      ? Socket
+    name === "./transport"
+      ? { getTransport: () => Socket }
       : name === "node:fs"
         ? { writeFileSync() {} }
         : name === "./desktop"

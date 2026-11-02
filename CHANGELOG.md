@@ -1,5 +1,12 @@
 # Changelog
 
+## 1.8.0 — 2026-11-02
+
+- Add an author-qualified Marketplace build with the official Elgato SDK and SDK 3 / Stream Deck 6.9 metadata for DRM compatibility.
+- Keep the existing direct-distribution UUID and transport for installed GitHub users.
+- Add Marketplace artwork, listing copy, privacy policy, AI disclosure, and submission notes.
+- Pin a patched Zod runtime through an override for the official SDK dependency.
+
 ## 1.7.0 — 2026-11-02
 
 - Press a percentage key to toggle Remaining / Used instantly.

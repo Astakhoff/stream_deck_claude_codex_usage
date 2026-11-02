@@ -1,0 +1,7 @@
+Keep Claude and Codex weekly usage in view on your Stream Deck. See remaining or used capacity, saved resets with expiry dates, and time until the next weekly budget reset. Press a percentage key to switch between Remaining and Used; the bar changes with it.
+
+Six actions cover Claude and Codex independently. Customize warning colors and thresholds, see compact days/hours countdowns, and read exact reset times in your local timezone. Visible actions check every minute, subject to service retry delays.
+
+Free and open source. Requires macOS 13+, Stream Deck 6.9+, and an eligible Claude and/or Codex subscription with usage data. Uses an existing Claude Desktop login or file-backed Codex ChatGPT login. No manual session-key entry. Reads local credentials only to query the corresponding provider; no developer server or telemetry. No Windows support. Internal service interfaces may change; account and reset availability vary. This monitor cannot redeem resets.
+
+Developed with substantial OpenAI Codex assistance in code, tests, documentation, and artwork, under human product direction and on-device evaluation. Independent community project; not affiliated with or endorsed by Anthropic or OpenAI.

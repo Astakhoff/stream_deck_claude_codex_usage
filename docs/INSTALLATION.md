@@ -112,3 +112,7 @@ Remove the plugin through Stream Deck's plugin management, or quit Stream Deck a
 | Old percentage after weekly reset | The old percentage is hidden until a valid new period arrives; wait for the next successful refresh.                  |
 
 For local diagnosis, the installed plugin may contain `status.json`. It includes usage and timestamps, not credentials. Review it before sharing. Never upload Codex's `auth.json`, Claude's `config.json`, Keychain exports, tokens, or personal Stream Deck profile backups to an issue.
+
+## Marketplace channel
+
+The Marketplace package uses an author-qualified plugin UUID and requires Stream Deck 6.9+. It is separate from the direct GitHub installer. Switching channels requires adding the new Marketplace actions to your profile; existing direct-install keys keep their original plugin identity. The [Marketplace guide](../marketplace/README.md) records submission status and build details.
