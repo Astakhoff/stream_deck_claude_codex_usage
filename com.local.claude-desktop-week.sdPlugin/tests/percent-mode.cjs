@@ -70,8 +70,8 @@ test("missing and expired readings never display fabricated Used capacity", () =
     render(data(37), { percentMode: "used" }, null, Date.parse("2026-11-07")),
     />63%</,
   );
-  assert.match(
+  assert.doesNotMatch(
     render(data(37), { percentMode: "used" }, "OFFLINE", now),
-    /STALE/,
+    /STALE/i,
   );
 });

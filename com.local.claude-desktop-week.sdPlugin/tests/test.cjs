@@ -53,9 +53,9 @@ test("percentage countdown uses compact days and hours", () =>
     main: "4d 12h",
     sub: "",
   }));
-test("stale and reset states clearly marked", () => {
+test("retained readings omit stale labels and elapsed readings are hidden", () => {
   const d = { remaining: 37, resetsAt: reset, fetchedAt: now };
-  assert.match(render(d, {}, "OFFLINE", now), /STALE/);
+  assert.doesNotMatch(render(d, {}, "OFFLINE", now), /STALE/i);
   assert.match(render(d, {}, null, Date.parse(reset) + 1), /No data/);
   assert.doesNotMatch(render(d, {}, null, Date.parse(reset) + 1), /37%/);
 });

@@ -75,7 +75,7 @@ test("last hour, stale data and errors remain truthful", () => {
   );
   assert.match(
     renderCountdown({ resetsAt: reset, fetchedAt: now }, {}, "OFFLINE", now),
-    /Week · stale/,
+    />Week</,
   );
   assert.match(
     renderCountdown(
@@ -84,7 +84,7 @@ test("last hour, stale data and errors remain truthful", () => {
       null,
       now,
     ),
-    /Week · stale/,
+    />Week</,
   );
   assert.match(
     renderCountdown(null, { provider: "codex" }, "OPEN_CODEX", now),

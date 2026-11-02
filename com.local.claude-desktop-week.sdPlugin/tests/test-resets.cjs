@@ -80,7 +80,7 @@ test("R1 date, none, unknown and stale display", () => {
     />none</,
   );
   assert.doesNotMatch(renderResets(null, {}, null, now), />none</);
-  assert.match(renderResets(d, {}, "OFFLINE", now), />STALE</);
+  assert.doesNotMatch(renderResets(d, {}, "OFFLINE", now), /STALE/i);
 });
 test("reset-compatible desktop token preferred over weekly-only profile", () => {
   const { selectCredential } = require("../bin/desktop");

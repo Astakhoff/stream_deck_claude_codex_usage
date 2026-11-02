@@ -1,6 +1,6 @@
 {
   "name": "claude-desktop-week",
-  "version": "1.6.2",
+  "version": "1.6.3",
   "private": true,
   "dependencies": {
     "ws": "^8.22.1"

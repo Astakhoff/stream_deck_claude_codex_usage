@@ -22,7 +22,7 @@ The previews use example values and dates, not a real account snapshot.
 - Independent 60-second polling for Claude and Codex while their actions are visible.
 - Claude keys share one request; Codex keys share one usage request and one reset-inventory request per poll.
 - Automatic use of the existing Claude Desktop login and local Codex ChatGPT login on the same Mac.
-- Explicit unavailable/stale states instead of treating errors as zero resets.
+- Unavailable states on keys and update diagnostics in action settings; errors never mean zero resets.
 - Read-only monitoring: pressing a key checks usage; it does not redeem a reset.
 - English-only interface, documentation, status labels, and date formatting; no language selector.
 

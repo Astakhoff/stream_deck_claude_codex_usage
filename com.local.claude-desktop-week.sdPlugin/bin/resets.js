@@ -66,8 +66,6 @@ function availableResets(credits, now = Date.now()) {
 }
 function renderResets(data, config = {}, error, now = Date.now()) {
   const credits = availableResets(data?.resetCredits, now);
-  const stale =
-    credits.known && (!!error || (data && now - data.fetchedAt > 150000));
   const has = credits.known && credits.count > 0;
   const accent = /^#[0-9a-f]{6}$/i.test(config.greenColor)
     ? config.greenColor
@@ -80,9 +78,7 @@ function renderResets(data, config = {}, error, now = Date.now()) {
       .toUpperCase();
   const main = credits.known ? (has ? `R${credits.count}` : "none") : "—";
   const font = main.length > 3 ? 44 : 63;
-  const sub = stale
-    ? "STALE"
-    : !credits.known
+  const sub = !credits.known
       ? error === "OPEN_CODEX"
         ? "Open Codex"
         : error === "OPEN_CLAUDE"
@@ -93,6 +89,6 @@ function renderResets(data, config = {}, error, now = Date.now()) {
           ? "EXPIRES"
           : "AVAILABLE"
         : "";
-  return `<svg xmlns="http://www.w3.org/2000/svg" width="144" height="144" viewBox="0 0 144 144"><defs><radialGradient id="bg"><stop stop-color="#1b2335"/><stop offset="1" stop-color="#0c111d"/></radialGradient></defs><rect width="144" height="144" rx="16" fill="url(#bg)"/><g font-family="Arial, Helvetica, sans-serif" font-weight="800" text-anchor="middle"><text x="72" y="${credits.known && !has && !stale ? 88 : 77}" font-size="${font}" fill="${credits.known ? "#f3f8ff" : "#91a1b9"}">${main}</text><text x="72" y="101" font-size="15" fill="${stale ? "#ffd45c" : accent}">${sub}</text><text x="72" y="128" font-size="27" fill="${accent}">${date}</text></g></svg>`;
+  return `<svg xmlns="http://www.w3.org/2000/svg" width="144" height="144" viewBox="0 0 144 144"><defs><radialGradient id="bg"><stop stop-color="#1b2335"/><stop offset="1" stop-color="#0c111d"/></radialGradient></defs><rect width="144" height="144" rx="16" fill="url(#bg)"/><g font-family="Arial, Helvetica, sans-serif" font-weight="800" text-anchor="middle"><text x="72" y="${credits.known && !has ? 88 : 77}" font-size="${font}" fill="${credits.known ? "#f3f8ff" : "#91a1b9"}">${main}</text><text x="72" y="101" font-size="15" fill="${accent}">${sub}</text><text x="72" y="128" font-size="27" fill="${accent}">${date}</text></g></svg>`;
 }
 module.exports = { parseResets, availableResets, renderResets };

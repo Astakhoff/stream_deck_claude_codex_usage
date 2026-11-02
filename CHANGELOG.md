@@ -1,5 +1,10 @@
 # Changelog
 
+## 1.6.3 — 2026-11-02
+
+- Remove stale labels from percentage, reset, and countdown keys.
+- Keep last-reading and update diagnostics in action settings.
+
 ## 1.6.2 — 2026-11-02
 
 - Enlarge the days/hours countdown below the percentage bar.

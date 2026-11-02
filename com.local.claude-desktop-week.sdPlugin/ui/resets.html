@@ -76,7 +76,7 @@
   ><input id="greenColor" type="color" value="#55e58c" />
   <p>
     Refreshes every minute with provider-specific requests. An unavailable
-    reading shows No data / STALE and is never treated as zero resets.
+    reading is retained; unavailable data shows No data and is never treated as zero resets.
   </p>
   <button id="refresh">Check now</button>
   <script>
@@ -145,6 +145,8 @@
           text +=
             "\nChecked: " +
             new Date(data.fetchedAt).toLocaleTimeString("en-US");
+        if (error || (data?.fetchedAt && Date.now() - data.fetchedAt > 150000))
+          text += "\nShowing last reading; update pending";
         if (error) text += "\n" + error;
         document.getElementById("status").textContent = text;
       };

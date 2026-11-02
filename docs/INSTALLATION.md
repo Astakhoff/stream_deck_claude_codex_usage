@@ -106,7 +106,7 @@ Remove the plugin through Stream Deck's plugin management, or quit Stream Deck a
 | `Update needed`                   | The desktop cache format may have changed. Check releases or open an issue with the app versions.                     |
 | `No data` on resets               | The server did not provide a supported reset inventory. This is different from having no resets.                      |
 | `none` on resets                  | The server confirmed no saved resets, or all returned grants are expired, paused, future, or exhausted.               |
-| `STALE`                           | The most recent request failed or the last reading is over 150 seconds old. Check the connection and wait for retry.  |
+| `Showing last reading; update pending` (action settings)                           | The most recent request failed or the last reading is over 150 seconds old. Check the connection and wait for retry.  |
 | `Retry later`                     | The endpoint returned HTTP 429; the plugin honors Retry-After with a bounded delay.                                   |
 | Plugin missing                    | Reopen Stream Deck; check that the folder name ends in `.sdPlugin` and that release dependencies are included.        |
 | Old percentage after weekly reset | The old percentage is hidden until a valid new period arrives; wait for the next successful refresh.                  |

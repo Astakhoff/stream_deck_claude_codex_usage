@@ -71,8 +71,7 @@
   ><input id="greenColor" type="color" value="#55e58c" />
   <p>
     Uses the same login and shared minute-by-minute polling as the other keys
-    for this provider. The last hour is shown as &lt;1h. Stale readings are
-    marked; after the deadline, old time is hidden until a new period arrives.
+    for this provider. The last hour is shown as &lt;1h. Update status is shown here; after the deadline, old time is hidden until a new period arrives.
   </p>
   <button id="refresh">Check now</button>
   <script>
@@ -126,6 +125,8 @@
           text +=
             "\nChecked: " +
             new Date(data.fetchedAt).toLocaleTimeString("en-US");
+        if (error || (data?.fetchedAt && Date.now() - data.fetchedAt > 150000))
+          text += "\nShowing last reading; update pending";
         if (error) text += "\n" + error;
         document.getElementById("status").textContent = text;
       };

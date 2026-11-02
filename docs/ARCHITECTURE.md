@@ -31,7 +31,7 @@ Redirects are rejected and each request has a 15-second timeout. No redemption e
 
 Reset inventory uses `available_count`, not `applicable_available_count`: a saved reset still counts when it cannot be applied to the current usage state. Available, plan-supported credits supply expiry dates. Expired credits are removed, duplicate IDs are deduplicated, and a count not fully described by the detailed list retains its remainder without inventing an expiry date. IDs and profile fields are discarded after parsing.
 
-Usage and reset failures are independent. The last good reading for the affected part is retained with its original timestamp and an explicit error/stale indicator. A changed local account cannot inherit the previous account's retained reading; authentication failures clear affected retained data. A process-only account fingerprint is not included in diagnostics or inspector messages.
+Usage and reset failures are independent. The last good reading for the affected part is retained with its original timestamp and update diagnostics in the property inspector. A changed local account cannot inherit the previous account's retained reading; authentication failures clear affected retained data. A process-only account fingerprint is not included in diagnostics or inspector messages.
 
 ## Claude reset semantics
 

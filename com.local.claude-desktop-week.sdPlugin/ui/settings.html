@@ -128,7 +128,7 @@
   <p>
     Refreshes every 60 seconds. The bottom line shows time left as days and
     hours, such as 6d 13h. Exact reset day/time is shown on the separate Weekly
-    countdown keys. Errors mark the last reading STALE; API retry delays are
+    countdown keys. Errors retain the last reading; API retry delays are
     respected.
   </p>
   <button id="refresh">Check now</button>
@@ -161,6 +161,8 @@
             " · Checked " +
             new Date(data.fetchedAt).toLocaleTimeString("en-US")
           : "Waiting for usage data";
+      if (lastError || (data?.fetchedAt && Date.now() - data.fetchedAt > 150000))
+        status.textContent += " · Showing last reading; update pending";
       if (lastError) status.textContent += " · " + lastError;
     }
     function send(event, payload) {
