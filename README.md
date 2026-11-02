@@ -14,7 +14,7 @@ The previews use example values and dates, not a real account snapshot.
 
 ## Features
 
-- Remaining weekly capacity as a large percentage, progress bar, and countdown.
+- Weekly capacity as a large **Remaining** or **Used** percentage with a matching progress bar.
 - A dedicated weekly countdown key: **Week**, large **days / hours**, and a **Claude / Codex** footer.
 - Saved reset inventory as `R1`, `R2`, `R3`, etc., with the earliest expiry date.
 - `none` when the server confirms there are no saved resets.
@@ -54,7 +54,7 @@ Claude Desktop's credential cache and the Anthropic/OpenAI usage endpoints are i
 
 ### Weekly remaining
 
-`37%` means **37% left**, not 37% used. `4 days` with `11:08` underneath means four full days, eleven hours, and eight minutes until the weekly reset. The countdown uses the reset timestamp returned by the server.
+The default **Remaining** mode shows the capacity left: `37%` means **37% left**. Select **Used** in the key settings to show the spent capacity instead: the same reading becomes **63% used**. The bar follows the selected value—shrinking in Remaining mode and filling in Used mode. `4 days` with `11:08` underneath means four full days, eleven hours, and eight minutes until the weekly reset. The countdown uses the reset timestamp returned by the server.
 
 | Remaining capacity | Default color |
 | ------------------ | ------------- |
@@ -63,7 +63,9 @@ Claude Desktop's credential cache and the Anthropic/OpenAI usage endpoints are i
 | 20% or less        | Red           |
 | 10% or less        | Critical red  |
 
-Select the key in Stream Deck to change thresholds and colors. Thresholds must satisfy `100 ≥ yellow > red > critical ≥ 0`.
+Select the key in Stream Deck to choose **Remaining / Used**, then change thresholds and colors. Warning colors always use remaining capacity, even in Used mode. Thresholds must satisfy `100 ≥ yellow > red > critical ≥ 0`.
+
+![Remaining and Used display modes](docs/images/weekly-percent-modes-preview.png)
 
 ### Weekly countdown
 

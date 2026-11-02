@@ -114,6 +114,27 @@ test("Stream Deck routes all six actions to the correct provider and shares read
   assert.match(svg("cl-time"), />Claude</);
   assert.match(svg("cx-time"), />Codex</);
   assert.doesNotMatch(svg("cl-time") + svg("cx-time"), /%/);
+  for (const [context, suffix] of [
+    ["cl-week", "weekly"],
+    ["cx-week", "codex-weekly"],
+  ]) {
+    socket.emit(
+      "message",
+      Buffer.from(
+        JSON.stringify({
+          event: "didReceiveSettings",
+          context,
+          action: "com.local.claude-desktop-week." + suffix,
+          payload: { settings: { percentMode: "used" } },
+        }),
+      ),
+    );
+  }
+  await new Promise(setImmediate);
+  assert.match(svg("cl-week"), />39%</);
+  assert.match(svg("cx-week"), />25%</);
+  assert.match(svg("cl-time"), />Claude</);
+  assert.deepEqual(counts, { claude: 1, codex: 1 });
   socket.emit(
     "message",
     Buffer.from(JSON.stringify({ event: "keyDown", context: "cx-week" })),

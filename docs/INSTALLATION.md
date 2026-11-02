@@ -78,7 +78,7 @@ Install the generated file in `dist/` using either method above.
 
 Select a key in Stream Deck to view its settings below the key grid.
 
-- **Weekly remaining:** change yellow, red, and critical thresholds and the four colors. Thresholds always refer to remaining capacity.
+- **Weekly remaining:** select **Remaining** or **Used** under **Percentage display**. The number and bar follow the selected mode. Change yellow, red, and critical thresholds and the four colors; these warning thresholds always refer to remaining capacity. Each key has its own display setting, and existing keys default to Remaining.
 - **Weekly countdown:** change the accent color. The key shows Week, days/hours, and its provider; no percentage is shown.
 - **Saved resets:** change the expiry text color. The settings panel lists each counted grant and its expiry.
 - **Check now:** requests a reading when the shared one-minute interval allows it. It respects server retry delays.

@@ -2,7 +2,7 @@
   "$schema": "https://schemas.elgato.com/streamdeck/plugins/manifest.json",
   "UUID": "com.local.claude-desktop-week",
   "Name": "Claude & Codex Weekly Usage",
-  "Version": "1.4.0.0",
+  "Version": "1.5.0.0",
   "Author": "Astakhoff",
   "Description": "Claude and Codex weekly remaining capacity and saved resets using local logins.",
   "Category": "Claude & Codex Weekly Usage",
@@ -28,7 +28,7 @@
       "UUID": "com.local.claude-desktop-week.weekly",
       "Icon": "imgs/weekly-action",
       "Controllers": ["Keypad"],
-      "Tooltip": "Remaining weekly capacity; refreshes every minute using Claude Desktop.",
+      "Tooltip": "Weekly capacity with Remaining or Used percentage and matching progress bar.",
       "PropertyInspectorPath": "ui/settings.html",
       "States": [
         {
@@ -56,7 +56,7 @@
       "UUID": "com.local.claude-desktop-week.codex-weekly",
       "Icon": "imgs/weekly-action",
       "Controllers": ["Keypad"],
-      "Tooltip": "Read-only Codex weekly monitor using the local Codex login.",
+      "Tooltip": "Weekly capacity with Remaining or Used percentage and matching progress bar.",
       "PropertyInspectorPath": "ui/settings.html",
       "States": [
         {

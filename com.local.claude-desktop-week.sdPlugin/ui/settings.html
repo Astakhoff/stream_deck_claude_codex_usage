@@ -81,6 +81,16 @@
   <p id="provider-description"></p>
   <div style="clear: both"></div>
   <div id="status">Connecting…</div>
+  <h3>PERCENTAGE DISPLAY</h3>
+  <label for="percentMode">Show</label>
+  <select id="percentMode">
+    <option value="remaining">Remaining</option>
+    <option value="used">Used</option>
+  </select>
+  <p>
+    The percentage and progress bar follow this choice. Warning colors always
+    use remaining capacity, even when Used is selected.
+  </p>
   <h3>REMAINING THRESHOLDS</h3>
   <p>Colors use remaining capacity. All thresholds are percentages.</p>
   <div class="row">
@@ -127,6 +137,7 @@
       action,
       config = {};
     const ids = [
+      "percentMode",
       "yellow",
       "red",
       "critical",
@@ -135,6 +146,22 @@
       "redColor",
       "criticalColor",
     ];
+    let lastData, lastError;
+    function updateStatus() {
+      const data = lastData;
+      const used = config.percentMode === "used";
+      const status = document.getElementById("status");
+      status.textContent =
+        data && Number.isFinite(data.remaining)
+          ? (used ? "Used " : "Remaining ") +
+            Math.round(used ? 100 - data.remaining : data.remaining) +
+            "% · Resets " +
+            new Date(data.resetsAt).toLocaleString("en-US") +
+            " · Checked " +
+            new Date(data.fetchedAt).toLocaleTimeString("en-US")
+          : "Waiting for usage data";
+      if (lastError) status.textContent += " · " + lastError;
+    }
     function send(event, payload) {
       ws?.readyState === 1 &&
         ws.send(
@@ -163,6 +190,7 @@
         ? "Uses the local Codex ChatGPT login automatically. No manual token is required."
         : "Uses the installed Claude Desktop login automatically. No manual session key is required.";
       config = a.payload?.settings || {};
+      config.percentMode = config.percentMode === "used" ? "used" : "remaining";
       ids.forEach((id) => {
         if (config[id] !== undefined)
           document.getElementById(id).value = config[id];
@@ -177,17 +205,9 @@
         if (m.event !== "sendToPropertyInspector") return;
         const { data, error, image } = m.payload;
         if (image) document.getElementById("preview").src = image;
-        const status = document.getElementById("status");
-        status.textContent =
-          data && Number.isFinite(data.remaining)
-            ? "Remaining " +
-              Math.round(data.remaining) +
-              "% · Resets " +
-              new Date(data.resetsAt).toLocaleString("en-US") +
-              " · Checked " +
-              new Date(data.fetchedAt).toLocaleTimeString("en-US")
-            : "Waiting for usage data";
-        if (error) status.textContent += " · " + error;
+        lastData = data;
+        lastError = error;
+        updateStatus();
       };
     };
     ids.forEach((id) =>
@@ -211,6 +231,7 @@
         }
         document.getElementById("error").textContent = "";
         config = next;
+        updateStatus();
         send("setSettings", config);
       }),
     );

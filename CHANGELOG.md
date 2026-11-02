@@ -1,5 +1,12 @@
 # Changelog
 
+## 1.5.0 — 2026-11-02
+
+- Add a per-key Remaining / Used display setting for Claude and Codex percentage actions.
+- Keep the percentage and progress bar in sync with the selected mode, including empty and full states.
+- Keep warning colors based on remaining capacity in both modes.
+- Preserve Remaining as the default for existing installations.
+
 ## 1.4.0 — 2026-11-02
 
 - Add separate Claude and Codex weekly countdown actions: Week heading, large days/hours, and provider footer.
