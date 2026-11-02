@@ -23,7 +23,7 @@ The previews use example values and dates, not a real account snapshot.
 - Claude keys share one request; Codex keys share one usage request and one reset-inventory request per poll.
 - Automatic use of the existing Claude Desktop login and local Codex ChatGPT login on the same Mac.
 - Unavailable states on keys and update diagnostics in action settings; errors never mean zero resets.
-- Read-only monitoring: pressing a key checks usage; it does not redeem a reset.
+- Read-only monitoring: percentage keys toggle Remaining / Used; other keys check usage. No key redeems a reset.
 - English-only interface, documentation, status labels, and date formatting; no language selector.
 
 ## Install
@@ -54,7 +54,7 @@ Claude Desktop's credential cache and the Anthropic/OpenAI usage endpoints are i
 
 ### Weekly remaining
 
-The default **Remaining** mode shows the capacity left: `37%` means **37% left**. Select **Used** in the key settings to show the spent capacity instead: the same reading becomes **63% used**. The bar follows the selected value—shrinking in Remaining mode and filling in Used mode. `6d 13h` below the bar is a live relative countdown: six full days and thirteen hours until reset. There is no clock-time line on percentage keys. The countdown uses the reset timestamp returned by the server.
+The default **Remaining** mode shows the capacity left: `37%` means **37% left**. Press the percentage key to switch between **Remaining** and **Used**, or select **Used** in the key settings to show the spent capacity instead: the same reading becomes **63% used**. Each key saves its own mode. The bar follows the selected value—shrinking in Remaining mode and filling in Used mode. `6d 13h` below the bar is a live relative countdown: six full days and thirteen hours until reset. There is no clock-time line on percentage keys. The countdown uses the reset timestamp returned by the server.
 
 | Remaining capacity | Default color |
 | ------------------ | ------------- |

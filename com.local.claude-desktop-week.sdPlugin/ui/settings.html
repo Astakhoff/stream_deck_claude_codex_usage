@@ -89,7 +89,8 @@
   </select>
   <p>
     The percentage and progress bar follow this choice. Warning colors always
-    use remaining capacity, even when Used is selected.
+    use remaining capacity, even when Used is selected. Press the key to toggle
+    between Remaining and Used; the selection is saved for this key.
   </p>
   <h3>REMAINING THRESHOLDS</h3>
   <p>Colors use remaining capacity. All thresholds are percentages.</p>
@@ -206,7 +207,11 @@
       ws.onmessage = (e) => {
         const m = JSON.parse(e.data);
         if (m.event !== "sendToPropertyInspector") return;
-        const { data, error, image } = m.payload;
+        const { data, error, image, percentMode } = m.payload;
+        if (percentMode === "remaining" || percentMode === "used") {
+          config.percentMode = percentMode;
+          document.getElementById("percentMode").value = percentMode;
+        }
         if (image) document.getElementById("preview").src = image;
         lastData = data;
         lastError = error;

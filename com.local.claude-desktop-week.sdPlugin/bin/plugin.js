@@ -45,6 +45,7 @@ function paint(context, config) {
     data: display,
     error: error || null,
     nextFetch: state.nextFetch,
+    percentMode: config.percentMode,
     image,
   });
 }
@@ -105,10 +106,16 @@ socket.on("message", (bytes) => {
   if (m.event === "willDisappear") actions.delete(m.context);
   if (m.event === "propertyInspectorDidAppear" && actions.has(m.context))
     paint(m.context, actions.get(m.context));
-  if (
-    m.event === "keyDown" ||
-    (m.event === "sendToPlugin" && m.payload?.command === "refresh")
-  ) {
+  if (m.event === "keyDown") {
+    const action = actions.get(m.context);
+    if (action?.actionType === "weekly") {
+      action.percentMode = action.percentMode === "used" ? "remaining" : "used";
+      const { provider, actionType, ...savedSettings } = action;
+      send("setSettings", m.context, savedSettings);
+      paint(m.context, action);
+    } else if (action) void tick(action.provider);
+  }
+  if (m.event === "sendToPlugin" && m.payload?.command === "refresh") {
     const action = actions.get(m.context);
     if (action) void tick(action.provider);
   }

@@ -1,5 +1,11 @@
 # Changelog
 
+## 1.7.0 — 2026-11-02
+
+- Press a percentage key to toggle Remaining / Used instantly.
+- Save the mode separately for each key and synchronize the settings selector.
+- Toggle using cached usage without an additional network request.
+
 ## 1.6.4 — 2026-11-02
 
 - Show days and hours together on one line on dedicated countdown keys.

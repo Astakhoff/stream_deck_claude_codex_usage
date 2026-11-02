@@ -141,4 +141,28 @@ test("Stream Deck routes all six actions to the correct provider and shares read
   );
   await new Promise(setImmediate);
   assert.deepEqual(counts, { claude: 1, codex: 1 });
+  assert.match(svg("cx-week"), />75%</);
+  assert.match(svg("cl-week"), />39%</);
+  const saved = sent.filter((m) => m.event === "setSettings" && m.context === "cx-week").at(-1).payload;
+  assert.equal(saved.percentMode, "remaining");
+  assert.equal(saved.greenColor, "#55e58c");
+  assert.equal(saved.provider, undefined);
+  assert.equal(saved.actionType, undefined);
+  const click = (context) => socket.emit("message", Buffer.from(JSON.stringify({ event: "keyDown", context })));
+  click("cx-week");
+  assert.match(svg("cx-week"), />25%</);
+  click("cl-week");
+  assert.match(svg("cl-week"), />61%</);
+  assert.match(svg("cx-week"), />25%</);
+  socket.emit("message", Buffer.from(JSON.stringify({ event: "willDisappear", context: "cx-week" })));
+  socket.emit("message", Buffer.from(JSON.stringify({ event: "willAppear", context: "cx-week", action: "com.local.claude-desktop-week.codex-weekly", payload: { settings: saved } })));
+  assert.match(svg("cx-week"), />75%</);
+  const saves = sent.filter((m) => m.event === "setSettings").length;
+  click("cx-reset"); click("cx-time");
+  assert.equal(sent.filter((m) => m.event === "setSettings").length, saves);
+  assert.match(svg("cx-reset"), />R2</);
+  assert.match(svg("cx-time"), />Week</);
+  assert.deepEqual(counts, { claude: 1, codex: 1 });
+  assert.equal(sent.filter((m) => m.event === "sendToPropertyInspector" && m.context === "cl-week").at(-1).payload.percentMode, "remaining");
+
 });
